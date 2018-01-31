@@ -293,7 +293,7 @@ namespace PTool
 
             string fileName = m_PumpNo;
             if (m_LocalPid == ProductID.GrasebyF6 || m_LocalPid == ProductID.WZS50F6)
-                fileName = string.Format("{0}{1}道{2}{3}", m_LocalPid.ToString(), channel, m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
+                fileName = string.Format("{0}{1}道{2}{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
             else
                 fileName = string.Format("{0}{1}{2}", m_LocalPid.ToString(), m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
             string path = Path.GetDirectoryName(Assembly.GetAssembly(typeof(MainForm)).Location) + "\\压力调试数据";
@@ -766,6 +766,119 @@ namespace PTool
             wb.SaveAs(name);
         }
 
+       
+        /// <summary>
+        /// 生成第三方公司需要的表格
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="caliParameters">已经生成好的数据，直接写到表格中</param>
+        private void GenReport(string name, List<PressureCalibrationParameter> caliParameters)
+        {
+            if (caliParameters == null || caliParameters.Count == 0)
+                return;
+            string title = string.Empty;
+            if (m_LocalPid == ProductID.GrasebyF6 || m_LocalPid == ProductID.WZS50F6)
+            {
+                title = string.Format("泵型号:{0}{1}道 产品序号:{2} 工装编号:{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, m_ToolingNo);
+            }
+            else
+            {
+                title = string.Format("泵型号：{0}", m_LocalPid.ToString());
+            }
+            var wb = new XLWorkbook();
+            var ws = wb.Worksheets.Add("压力调试数据");
+            int columnIndex = 0;
+            ws.Cell(1, ++columnIndex).Value = "机器编号";
+            ws.Cell(1, ++columnIndex).Value = "机器型号";
+            ws.Cell(1, ++columnIndex).Value = "道数";
+            ws.Cell(1, ++columnIndex).Value = "工装编号";
+            ws.Cell(1, ++columnIndex).Value = "P0值";
+            ws.Cell(1, ++columnIndex).Value = "10mlL预设值";
+            ws.Cell(1, ++columnIndex).Value = "10mlC预设值";
+            ws.Cell(1, ++columnIndex).Value = "10mlH预设值";
+            ws.Cell(1, ++columnIndex).Value = "20mlL预设值";
+            ws.Cell(1, ++columnIndex).Value = "20mlC预设值";
+            ws.Cell(1, ++columnIndex).Value = "20mlH预设值";
+            ws.Cell(1, ++columnIndex).Value = "30mlL预设值";
+            ws.Cell(1, ++columnIndex).Value = "30mlC预设值";
+            ws.Cell(1, ++columnIndex).Value = "30mlH预设值";
+            ws.Cell(1, ++columnIndex).Value = "50mlL预设值";
+            ws.Cell(1, ++columnIndex).Value = "50mlC预设值";
+            ws.Cell(1, ++columnIndex).Value = "50mlH预设值";
+            ws.Cell(1, ++columnIndex).Value = "10ml低压";
+            ws.Cell(1, ++columnIndex).Value = "10ml中压";
+            ws.Cell(1, ++columnIndex).Value = "10ml高压";
+            ws.Cell(1, ++columnIndex).Value = "20ml低压";
+            ws.Cell(1, ++columnIndex).Value = "20ml中压";
+            ws.Cell(1, ++columnIndex).Value = "20ml高压";
+            ws.Cell(1, ++columnIndex).Value = "30ml低压";
+            ws.Cell(1, ++columnIndex).Value = "30ml中压";
+            ws.Cell(1, ++columnIndex).Value = "30ml高压";
+            ws.Cell(1, ++columnIndex).Value = "50ml低压";
+            ws.Cell(1, ++columnIndex).Value = "50ml中压";
+            ws.Cell(1, ++columnIndex).Value = "50ml高压";
+
+            columnIndex = 0;
+            ws.Cell(2, ++columnIndex).Value = m_PumpNo;
+            ws.Cell(2, ++columnIndex).Value = m_LocalPid.ToString();
+            ws.Cell(2, ++columnIndex).Value = m_Channel;
+            ws.Cell(2, ++columnIndex).Value = m_ToolingNo;
+            ws.Cell(2, ++columnIndex).Value = m_Ch1SampleDataList.Min(x => x.m_PressureValue);
+            float mid = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 10, Misc.OcclusionLevel.L);
+            ws.Cell(2, ++columnIndex).Value = mid == 0 ? "" : mid.ToString("F2");
+            mid = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 10, Misc.OcclusionLevel.C);
+            ws.Cell(2, ++columnIndex).Value = mid == 0 ? "" : mid.ToString("F2");
+            mid = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 10, Misc.OcclusionLevel.H);
+            ws.Cell(2, ++columnIndex).Value = mid == 0 ? "" : mid.ToString("F2");
+            ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 20, Misc.OcclusionLevel.L);
+            ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 20, Misc.OcclusionLevel.C);
+            ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 20, Misc.OcclusionLevel.H);
+            ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 30, Misc.OcclusionLevel.L);
+            ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 30, Misc.OcclusionLevel.C);
+            ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 30, Misc.OcclusionLevel.H);
+            ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 50, Misc.OcclusionLevel.L);
+            ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 50, Misc.OcclusionLevel.C);
+            ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 50, Misc.OcclusionLevel.H);
+
+            PressureCalibrationParameter para = null;
+            para = caliParameters.Find((x) => { return x.m_SyringeSize == 10; });
+            if (para != null)
+            {
+                columnIndex = 17;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureL;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureC;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureH;
+            }
+            para = caliParameters.Find((x) => { return x.m_SyringeSize == 20; });
+            if (para != null)
+            {
+                columnIndex = 20;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureL;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureC;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureH;
+            }
+
+            para = caliParameters.Find((x) => { return x.m_SyringeSize == 30; });
+            if (para != null)
+            {
+                columnIndex = 23;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureL;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureC;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureH;
+            }
+
+            para = caliParameters.Find((x) => { return x.m_SyringeSize == 50; });
+            if (para != null)
+            {
+                columnIndex = 26;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureL;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureC;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureH;
+            }
+            wb.SaveAs(name);
+        }
+
+
         private void CalcuatePressure(ProductID pid, List<SampleData> sampleDataList)
         {
             if (sampleDataList == null || sampleDataList.Count == 0)
@@ -826,6 +939,18 @@ namespace PTool
                 caliParameters.Add(p);
             }
             WritePressureCaliParameter2Pump(caliParameters);
+
+            //
+            string path = Path.GetDirectoryName(Assembly.GetAssembly(typeof(MainForm)).Location) + "\\数据导出";
+            string fileName = m_PumpNo;
+            if (m_LocalPid == ProductID.GrasebyF6 || m_LocalPid == ProductID.WZS50F6)
+                fileName = string.Format("{0}{1}道{2}{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
+            else
+                fileName = string.Format("{0}{1}{2}", m_LocalPid.ToString(), m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
+            if (!System.IO.Directory.Exists(path))
+                System.IO.Directory.CreateDirectory(path);
+            string saveFileName = path + "\\" + fileName + ".xlsx";
+            GenReport(saveFileName, caliParameters);
         }
 
         /// <summary>
@@ -864,7 +989,7 @@ namespace PTool
             for (int i = 0; i < caliParas.Count; i++)
             {
                 m_ConnResponse.SetPressureCalibrationParameter((byte)(caliParas[i].m_SyringeSize), caliParas[i].m_PressureL, caliParas[i].m_PressureC, caliParas[i].m_PressureH);
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
             }
         }
 

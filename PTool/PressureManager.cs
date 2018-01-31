@@ -94,6 +94,28 @@ namespace PTool
                 return 0;
             return sp.m_Max;
         }
+
+        /// <summary>
+        /// 读中间值
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="size"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public float GetMidBySizeLevel(ProductID pid, int size, OcclusionLevel level)
+        {
+            ProductPressure pp = GetPressureByProductID(pid);
+            if (pp == null)
+                return 0;
+            LevelPressure lp = pp.Find(level);
+            if (lp == null)
+                return 0;
+            SizePressure sp = lp.Find(size);
+            if (sp == null)
+                return 0;
+            return sp.m_Mid;
+        }
+
     }
 
     public class ProductPressure
