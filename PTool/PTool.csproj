@@ -74,6 +74,12 @@
       <DependentUpon>Chart.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomEventArg.cs" />
+    <Compile Include="Detail.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Detail.Designer.cs">
+      <DependentUpon>Detail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -92,6 +98,9 @@
     <Compile Include="PressureManager.cs" />
     <EmbeddedResource Include="Chart.resx">
       <DependentUpon>Chart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Detail.resx">
+      <DependentUpon>Detail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -161,6 +170,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="image\icon_2_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="image\close_blue.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

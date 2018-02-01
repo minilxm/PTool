@@ -189,6 +189,7 @@ namespace PTool
 
         public void SetPid(ProductID pid)
         {
+            detail.Pid = pid;
             m_LocalPid = pid;
         }
 
@@ -876,6 +877,8 @@ namespace PTool
                 ws.Cell(2, ++columnIndex).Value = para.m_PressureH;
             }
             wb.SaveAs(name);
+            detail.P0 = m_Ch1SampleDataList.Min(x => x.m_PressureValue);
+            detail.CaliParameters = caliParameters;
         }
 
 
@@ -1109,6 +1112,11 @@ namespace PTool
         {
             Complete();
             EnableContols(true);
+        }
+
+        private void picDetail_Click(object sender, EventArgs e)
+        {
+            this.detail.Show();
         }
 
        

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Chart));
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tlpChannel = new System.Windows.Forms.TableLayoutPanel();
-            this.picChannel = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -47,14 +47,19 @@
             this.tbRate = new System.Windows.Forms.TextBox();
             this.WavelinePanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlChart = new System.Windows.Forms.Panel();
+            this.picChannel = new System.Windows.Forms.PictureBox();
             this.picStart = new System.Windows.Forms.PictureBox();
             this.picStop = new System.Windows.Forms.PictureBox();
             this.picDetail = new System.Windows.Forms.PictureBox();
+            this.detail = new PTool.Detail();
             this.tlpMain.SuspendLayout();
             this.tlpChannel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picChannel)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            this.WavelinePanel.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.pnlChart.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picChannel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDetail)).BeginInit();
@@ -67,8 +72,8 @@
             this.tlpMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
             this.tlpMain.Controls.Add(this.tlpChannel, 0, 0);
             this.tlpMain.Controls.Add(this.tableLayoutPanel1, 1, 0);
-            this.tlpMain.Controls.Add(this.WavelinePanel, 0, 1);
             this.tlpMain.Controls.Add(this.tableLayoutPanel2, 0, 2);
+            this.tlpMain.Controls.Add(this.pnlChart, 0, 1);
             this.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpMain.Location = new System.Drawing.Point(0, 0);
             this.tlpMain.Margin = new System.Windows.Forms.Padding(0);
@@ -96,18 +101,6 @@
             this.tlpChannel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpChannel.Size = new System.Drawing.Size(114, 178);
             this.tlpChannel.TabIndex = 0;
-            // 
-            // picChannel
-            // 
-            this.picChannel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picChannel.Image = global::PTool.Properties.Resources.icon_1;
-            this.picChannel.Location = new System.Drawing.Point(3, 64);
-            this.picChannel.Name = "picChannel";
-            this.tlpChannel.SetRowSpan(this.picChannel, 2);
-            this.picChannel.Size = new System.Drawing.Size(51, 50);
-            this.picChannel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picChannel.TabIndex = 0;
-            this.picChannel.TabStop = false;
             // 
             // label1
             // 
@@ -290,10 +283,11 @@
             // WavelinePanel
             // 
             this.WavelinePanel.BackColor = System.Drawing.Color.White;
-            this.tlpMain.SetColumnSpan(this.WavelinePanel, 2);
+            this.WavelinePanel.Controls.Add(this.detail);
+            this.WavelinePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WavelinePanel.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
             this.WavelinePanel.ForeColor = System.Drawing.Color.Black;
-            this.WavelinePanel.Location = new System.Drawing.Point(0, 178);
+            this.WavelinePanel.Location = new System.Drawing.Point(0, 0);
             this.WavelinePanel.Margin = new System.Windows.Forms.Padding(0);
             this.WavelinePanel.Name = "WavelinePanel";
             this.WavelinePanel.Size = new System.Drawing.Size(571, 357);
@@ -320,6 +314,33 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(571, 60);
             this.tableLayoutPanel2.TabIndex = 6;
+            // 
+            // pnlChart
+            // 
+            this.pnlChart.BackColor = System.Drawing.Color.White;
+            this.tlpMain.SetColumnSpan(this.pnlChart, 2);
+            this.pnlChart.Controls.Add(this.WavelinePanel);
+            this.pnlChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlChart.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
+            this.pnlChart.ForeColor = System.Drawing.Color.Black;
+            this.pnlChart.Location = new System.Drawing.Point(0, 178);
+            this.pnlChart.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlChart.Name = "pnlChart";
+            this.pnlChart.Size = new System.Drawing.Size(571, 357);
+            this.pnlChart.TabIndex = 5;
+            this.pnlChart.Paint += new System.Windows.Forms.PaintEventHandler(this.WavelinePanel_Paint);
+            // 
+            // picChannel
+            // 
+            this.picChannel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picChannel.Image = global::PTool.Properties.Resources.icon_1;
+            this.picChannel.Location = new System.Drawing.Point(3, 64);
+            this.picChannel.Name = "picChannel";
+            this.tlpChannel.SetRowSpan(this.picChannel, 2);
+            this.picChannel.Size = new System.Drawing.Size(51, 50);
+            this.picChannel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picChannel.TabIndex = 0;
+            this.picChannel.TabStop = false;
             // 
             // picStart
             // 
@@ -358,6 +379,19 @@
             this.picDetail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picDetail.TabIndex = 0;
             this.picDetail.TabStop = false;
+            this.picDetail.Click += new System.EventHandler(this.picDetail_Click);
+            // 
+            // detail
+            // 
+            this.detail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(113)))), ((int)(((byte)(185)))));
+            this.detail.Location = new System.Drawing.Point(64, 118);
+            this.detail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.detail.Name = "detail";
+            this.detail.P0 = 0F;
+            this.detail.Pid = PTool.ProductID.GrasebyC6;
+            this.detail.Size = new System.Drawing.Size(463, 160);
+            this.detail.TabIndex = 6;
+            this.detail.Visible = false;
             // 
             // Chart
             // 
@@ -372,10 +406,12 @@
             this.tlpMain.ResumeLayout(false);
             this.tlpChannel.ResumeLayout(false);
             this.tlpChannel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picChannel)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.WavelinePanel.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.pnlChart.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picChannel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDetail)).EndInit();
@@ -407,5 +443,7 @@
         private System.Windows.Forms.PictureBox picStart;
         private System.Windows.Forms.PictureBox picStop;
         private System.Windows.Forms.PictureBox picDetail;
+        private System.Windows.Forms.Panel pnlChart;
+        private Detail detail;
     }
 }
