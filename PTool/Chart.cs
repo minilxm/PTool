@@ -256,7 +256,7 @@ namespace PTool
                 this.BeginInvoke(new DelegateSetPValue(SetPValue), new object[] { p });
                 return;
             }
-            lbPValue.Text = p.ToString("F2");
+            lbPValue.Text = (p*100).ToString("F0");
             m_GrasebyDevice.Close();
         }
 
@@ -761,7 +761,7 @@ namespace PTool
             {
                 ws.Cell(index, 1).Value = sampleDataList[i].m_SampleTime.ToString("yyyy-MM-dd HH_mm_ss");
                 ws.Cell(index, 2).Value = sampleDataList[i].m_Weight;
-                ws.Cell(index, 3).Value = sampleDataList[i].m_PressureValue;
+                ws.Cell(index, 3).Value = sampleDataList[i].m_PressureValue*100;
                 index++;
             }
             wb.SaveAs(name);
@@ -824,13 +824,13 @@ namespace PTool
             ws.Cell(2, ++columnIndex).Value = m_LocalPid.ToString();
             ws.Cell(2, ++columnIndex).Value = m_Channel;
             ws.Cell(2, ++columnIndex).Value = m_ToolingNo;
-            ws.Cell(2, ++columnIndex).Value = m_Ch1SampleDataList.Min(x => x.m_PressureValue);
+            ws.Cell(2, ++columnIndex).Value = m_Ch1SampleDataList.Min(x => x.m_PressureValue)*100;
             float mid = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 10, Misc.OcclusionLevel.L);
-            ws.Cell(2, ++columnIndex).Value = mid == 0 ? "" : mid.ToString("F2");
+            ws.Cell(2, ++columnIndex).Value = mid == 0 ? "" : (mid).ToString("F2");
             mid = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 10, Misc.OcclusionLevel.C);
-            ws.Cell(2, ++columnIndex).Value = mid == 0 ? "" : mid.ToString("F2");
+            ws.Cell(2, ++columnIndex).Value = mid == 0 ? "" : (mid).ToString("F2");
             mid = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 10, Misc.OcclusionLevel.H);
-            ws.Cell(2, ++columnIndex).Value = mid == 0 ? "" : mid.ToString("F2");
+            ws.Cell(2, ++columnIndex).Value = mid == 0 ? "" : (mid).ToString("F2");
             ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 20, Misc.OcclusionLevel.L);
             ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 20, Misc.OcclusionLevel.C);
             ws.Cell(2, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 20, Misc.OcclusionLevel.H);
@@ -846,38 +846,38 @@ namespace PTool
             if (para != null)
             {
                 columnIndex = 17;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureL;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureC;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureH;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureL * 100;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureC * 100;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureH * 100;
             }
             para = caliParameters.Find((x) => { return x.m_SyringeSize == 20; });
             if (para != null)
             {
                 columnIndex = 20;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureL;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureC;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureH;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureL * 100;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureC * 100;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureH * 100;
             }
 
             para = caliParameters.Find((x) => { return x.m_SyringeSize == 30; });
             if (para != null)
             {
                 columnIndex = 23;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureL;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureC;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureH;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureL * 100;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureC * 100;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureH * 100;
             }
 
             para = caliParameters.Find((x) => { return x.m_SyringeSize == 50; });
             if (para != null)
             {
                 columnIndex = 26;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureL;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureC;
-                ws.Cell(2, ++columnIndex).Value = para.m_PressureH;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureL * 100;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureC * 100;
+                ws.Cell(2, ++columnIndex).Value = para.m_PressureH * 100;
             }
             wb.SaveAs(name);
-            detail.P0 = m_Ch1SampleDataList.Min(x => x.m_PressureValue);
+            detail.P0 = m_Ch1SampleDataList.Min(x => x.m_PressureValue) * 100;
             detail.CaliParameters = caliParameters;
         }
 

@@ -1559,7 +1559,7 @@ namespace PTool
             {
                 ws.Cell(index, 1).Value = sampleDataList[i].m_SampleTime.ToString("yyyy-MM-dd HH_mm_ss");
                 ws.Cell(index, 2).Value = sampleDataList[i].m_Weight;
-                ws.Cell(index, 3).Value = sampleDataList[i].m_PressureValue;
+                ws.Cell(index, 3).Value = sampleDataList[i].m_PressureValue*100;
                 index++;
             }
             wb.SaveAs(name);

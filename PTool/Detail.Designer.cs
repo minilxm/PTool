@@ -381,16 +381,19 @@
             this.lbL50Right.Name = "lbL50Right";
             this.lbL50Right.Size = new System.Drawing.Size(57, 24);
             this.lbL50Right.TabIndex = 0;
+            this.lbL50Right.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbL30Right
             // 
             this.lbL30Right.AutoSize = true;
+            this.lbL30Right.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbL30Right.Font = new System.Drawing.Font("Noto Sans CJK SC Regular", 10F);
             this.lbL30Right.ForeColor = System.Drawing.Color.White;
             this.lbL30Right.Location = new System.Drawing.Point(135, 94);
             this.lbL30Right.Name = "lbL30Right";
-            this.lbL30Right.Size = new System.Drawing.Size(0, 21);
+            this.lbL30Right.Size = new System.Drawing.Size(57, 21);
             this.lbL30Right.TabIndex = 0;
+            this.lbL30Right.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbL20Right
             // 
@@ -402,6 +405,7 @@
             this.lbL20Right.Name = "lbL20Right";
             this.lbL20Right.Size = new System.Drawing.Size(57, 21);
             this.lbL20Right.TabIndex = 0;
+            this.lbL20Right.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lbC20Left
             // 

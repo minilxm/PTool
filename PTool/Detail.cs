@@ -61,14 +61,14 @@ namespace PTool
         {
             if(this.Visible)
             {
-                lbP0.Text = "P0="+this.m_P0.ToString("F2");
+                lbP0.Text = "P0="+this.m_P0.ToString("F0");
                 PressureCalibrationParameter para = null;
                 para = m_CaliParameters.Find((x) => { return x.m_SyringeSize == 10; });
                 if (para != null)
                 {
-                    lbTitle.Text = para.m_PressureL.ToString("F2");
-                    lbC10Right.Text = para.m_PressureC.ToString("F2");
-                    lbH10Right.Text = para.m_PressureH.ToString("F2");
+                    lbL10Right.Text = (para.m_PressureL * 100).ToString("F0");
+                    lbC10Right.Text = (para.m_PressureC * 100).ToString("F0");
+                    lbH10Right.Text = (para.m_PressureH * 100).ToString("F0");
                     lbL10Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 10, Misc.OcclusionLevel.L).ToString("F2");
                     lbC10Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 10, Misc.OcclusionLevel.C).ToString("F2");
                     lbH10Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 10, Misc.OcclusionLevel.H).ToString("F2");
@@ -76,9 +76,9 @@ namespace PTool
                 para = m_CaliParameters.Find((x) => { return x.m_SyringeSize == 20; });
                 if (para != null)
                 {
-                    lbL20Right.Text = para.m_PressureL.ToString("F2");
-                    lbC20Right.Text = para.m_PressureC.ToString("F2");
-                    lbH20Right.Text = para.m_PressureH.ToString("F2");
+                    lbL20Right.Text = (para.m_PressureL * 100).ToString("F0");
+                    lbC20Right.Text = (para.m_PressureC * 100).ToString("F0");
+                    lbH20Right.Text = (para.m_PressureH * 100).ToString("F0");
                     lbL20Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 20, Misc.OcclusionLevel.L).ToString("F2");
                     lbC20Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 20, Misc.OcclusionLevel.C).ToString("F2");
                     lbH20Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 20, Misc.OcclusionLevel.H).ToString("F2");
@@ -87,9 +87,9 @@ namespace PTool
                 para = m_CaliParameters.Find((x) => { return x.m_SyringeSize == 30; });
                 if (para != null)
                 {
-                    lbL30Right.Text = para.m_PressureL.ToString("F2");
-                    lbC30Right.Text = para.m_PressureC.ToString("F2");
-                    lbH30Right.Text = para.m_PressureH.ToString("F2");
+                    lbL30Right.Text = (para.m_PressureL * 100).ToString("F0");
+                    lbC30Right.Text = (para.m_PressureC * 100).ToString("F0");
+                    lbH30Right.Text = (para.m_PressureH * 100).ToString("F0");
                     lbL30Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid,30, Misc.OcclusionLevel.L).ToString("F2");
                     lbC30Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid,30, Misc.OcclusionLevel.C).ToString("F2");
                     lbH30Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid,30, Misc.OcclusionLevel.H).ToString("F2");
@@ -98,9 +98,9 @@ namespace PTool
                 para = m_CaliParameters.Find((x) => { return x.m_SyringeSize == 50; });
                 if (para != null)
                 {
-                    lbL50Right.Text = para.m_PressureL.ToString("F2");
-                    lbC50Right.Text = para.m_PressureC.ToString("F2");
-                    lbH50Right.Text = para.m_PressureH.ToString("F2");
+                    lbL50Right.Text = (para.m_PressureL * 100).ToString("F0");
+                    lbC50Right.Text = (para.m_PressureC * 100).ToString("F0");
+                    lbH50Right.Text = (para.m_PressureH * 100).ToString("F0");
                     lbL50Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 50, Misc.OcclusionLevel.L).ToString("F2");
                     lbC50Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 50, Misc.OcclusionLevel.C).ToString("F2");
                     lbH50Left.Text = PressureManager.Instance().GetMidBySizeLevel(m_LocalPid, 50, Misc.OcclusionLevel.H).ToString("F2");
