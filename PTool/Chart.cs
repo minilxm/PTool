@@ -376,8 +376,6 @@ namespace PTool
                 {
                     m_gh.DrawLine(Pens.Black, new PointF(originalpoint.X + intervalX * i, originalpoint.Y), new PointF(originalpoint.X + intervalX * i, originalpoint.Y - lineSegmentHeight));
                 }
-                //画X坐标文字
-                //m_gh.DrawString("重量(kg)", fontTitle, Brushes.Black, new PointF(originalpoint.X + intervalX * xSectionCount - 65, originalpoint.Y + 18));
                 //画X坐标值
                 float xValueInerval = xMax / xSectionCount;
                 m_ValueInervalX = xValueInerval;
@@ -418,10 +416,10 @@ namespace PTool
                     m_gh.DrawString(i.ToString(), xValuefont, Brushes.Black, new PointF(yOriginalPoint.X - 24, yOriginalPoint.Y - intervalY * i - 6));
                 }
                 //画legend
-                m_gh.DrawString(VOL, fontTitle, m_WaveLineBrush, new PointF(xEndPoint.X - 40, 10));
+                m_gh.DrawString(VOL, fontTitle, m_WaveLineBrush, new PointF(xEndPoint.X - 80, 10));
                 SizeF fontSize = m_gh.MeasureString(VOL, fontTitle);
 
-                m_gh.DrawLine(m_WaveLinePen, new PointF(xEndPoint.X - 60, 10 + fontSize.Height / 2), new PointF(xEndPoint.X - 40, 10 + fontSize.Height / 2));
+                m_gh.DrawLine(m_WaveLinePen, new PointF(xEndPoint.X - 100, 10 + fontSize.Height / 2), new PointF(xEndPoint.X - 80, 10 + fontSize.Height / 2));
             }
             catch (Exception e)
             {
@@ -626,7 +624,7 @@ namespace PTool
             else
             {
                 Misc.PressureSensorInfo paras = args.EventData;
-                lbPValue.Text = paras.pressureVoltage.ToString("F2");
+                lbPValue.Text = (paras.pressureVoltage*100).ToString("F0");
                 lock (m_Ch1SampleDataList)
                 {
                     m_Ch1SampleDataList.Add(new SampleData(DateTime.Now, paras.pressureVoltage, -1000f));

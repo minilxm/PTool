@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Chart));
             this.tlpMain = new System.Windows.Forms.TableLayoutPanel();
             this.tlpChannel = new System.Windows.Forms.TableLayoutPanel();
+            this.picChannel = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -45,24 +46,23 @@
             this.cbToolingPort = new System.Windows.Forms.ComboBox();
             this.cbPumpPort = new System.Windows.Forms.ComboBox();
             this.tbRate = new System.Windows.Forms.TextBox();
-            this.WavelinePanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlChart = new System.Windows.Forms.Panel();
-            this.picChannel = new System.Windows.Forms.PictureBox();
             this.picStart = new System.Windows.Forms.PictureBox();
             this.picStop = new System.Windows.Forms.PictureBox();
             this.picDetail = new System.Windows.Forms.PictureBox();
+            this.pnlChart = new System.Windows.Forms.Panel();
+            this.WavelinePanel = new System.Windows.Forms.Panel();
             this.detail = new PTool.Detail();
             this.tlpMain.SuspendLayout();
             this.tlpChannel.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
-            this.WavelinePanel.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
-            this.pnlChart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picChannel)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDetail)).BeginInit();
+            this.pnlChart.SuspendLayout();
+            this.WavelinePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // tlpMain
@@ -82,7 +82,7 @@
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 60F));
             this.tlpMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tlpMain.Size = new System.Drawing.Size(571, 595);
+            this.tlpMain.Size = new System.Drawing.Size(500, 595);
             this.tlpMain.TabIndex = 0;
             // 
             // tlpChannel
@@ -99,15 +99,27 @@
             this.tlpChannel.RowCount = 2;
             this.tlpChannel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tlpChannel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tlpChannel.Size = new System.Drawing.Size(114, 178);
+            this.tlpChannel.Size = new System.Drawing.Size(100, 178);
             this.tlpChannel.TabIndex = 0;
+            // 
+            // picChannel
+            // 
+            this.picChannel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picChannel.Image = global::PTool.Properties.Resources.icon_1;
+            this.picChannel.Location = new System.Drawing.Point(3, 64);
+            this.picChannel.Name = "picChannel";
+            this.tlpChannel.SetRowSpan(this.picChannel, 2);
+            this.picChannel.Size = new System.Drawing.Size(44, 50);
+            this.picChannel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picChannel.TabIndex = 0;
+            this.picChannel.TabStop = false;
             // 
             // label1
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Noto Sans CJK SC Regular", 12F);
-            this.label1.Location = new System.Drawing.Point(60, 65);
+            this.label1.Location = new System.Drawing.Point(53, 65);
             this.label1.Name = "label1";
             this.tlpChannel.SetRowSpan(this.label1, 2);
             this.label1.Size = new System.Drawing.Size(26, 48);
@@ -135,14 +147,14 @@
             this.tableLayoutPanel1.Controls.Add(this.cbPumpPort, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbRate, 1, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(114, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(100, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(457, 178);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(400, 178);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label2
@@ -161,7 +173,7 @@
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Noto Sans CJK SC Regular", 12F);
-            this.label3.Location = new System.Drawing.Point(267, 17);
+            this.label3.Location = new System.Drawing.Point(235, 17);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 24);
             this.label3.TabIndex = 1;
@@ -183,7 +195,7 @@
             this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Noto Sans CJK SC Regular", 12F);
-            this.label5.Location = new System.Drawing.Point(267, 76);
+            this.label5.Location = new System.Drawing.Point(235, 76);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(68, 24);
             this.label5.TabIndex = 1;
@@ -194,7 +206,7 @@
             this.label6.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Noto Sans CJK SC Regular", 12F);
-            this.label6.Location = new System.Drawing.Point(194, 76);
+            this.label6.Location = new System.Drawing.Point(171, 76);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(28, 24);
             this.label6.TabIndex = 1;
@@ -216,7 +228,7 @@
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Noto Sans CJK SC Regular", 12F);
-            this.label8.Location = new System.Drawing.Point(194, 136);
+            this.label8.Location = new System.Drawing.Point(171, 136);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(50, 24);
             this.label8.TabIndex = 1;
@@ -227,7 +239,7 @@
             this.lbWeight.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lbWeight.AutoSize = true;
             this.lbWeight.Font = new System.Drawing.Font("Noto Sans CJK SC Bold", 16F, System.Drawing.FontStyle.Bold);
-            this.lbWeight.Location = new System.Drawing.Point(94, 72);
+            this.lbWeight.Location = new System.Drawing.Point(83, 72);
             this.lbWeight.Name = "lbWeight";
             this.lbWeight.Size = new System.Drawing.Size(55, 33);
             this.lbWeight.TabIndex = 1;
@@ -238,7 +250,7 @@
             this.lbPValue.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lbPValue.AutoSize = true;
             this.lbPValue.Font = new System.Drawing.Font("Noto Sans CJK SC Bold", 16F, System.Drawing.FontStyle.Bold);
-            this.lbPValue.Location = new System.Drawing.Point(358, 72);
+            this.lbPValue.Location = new System.Drawing.Point(315, 72);
             this.lbPValue.Name = "lbPValue";
             this.lbPValue.Size = new System.Drawing.Size(55, 33);
             this.lbPValue.TabIndex = 1;
@@ -250,9 +262,9 @@
             this.cbToolingPort.BackColor = System.Drawing.Color.White;
             this.cbToolingPort.Font = new System.Drawing.Font("Noto Sans CJK SC Bold", 12F, System.Drawing.FontStyle.Bold);
             this.cbToolingPort.FormattingEnabled = true;
-            this.cbToolingPort.Location = new System.Drawing.Point(94, 13);
+            this.cbToolingPort.Location = new System.Drawing.Point(83, 13);
             this.cbToolingPort.Name = "cbToolingPort";
-            this.cbToolingPort.Size = new System.Drawing.Size(94, 32);
+            this.cbToolingPort.Size = new System.Drawing.Size(82, 32);
             this.cbToolingPort.TabIndex = 2;
             this.cbToolingPort.SelectedIndexChanged += new System.EventHandler(this.cbToolingPort_SelectedIndexChanged);
             // 
@@ -262,9 +274,9 @@
             this.cbPumpPort.BackColor = System.Drawing.Color.White;
             this.cbPumpPort.Font = new System.Drawing.Font("Noto Sans CJK SC Bold", 12F, System.Drawing.FontStyle.Bold);
             this.cbPumpPort.FormattingEnabled = true;
-            this.cbPumpPort.Location = new System.Drawing.Point(358, 13);
+            this.cbPumpPort.Location = new System.Drawing.Point(315, 13);
             this.cbPumpPort.Name = "cbPumpPort";
-            this.cbPumpPort.Size = new System.Drawing.Size(96, 32);
+            this.cbPumpPort.Size = new System.Drawing.Size(82, 32);
             this.cbPumpPort.TabIndex = 2;
             this.cbPumpPort.SelectedIndexChanged += new System.EventHandler(this.cbPumpPort_SelectedIndexChanged);
             // 
@@ -273,26 +285,12 @@
             this.tbRate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.tbRate.BackColor = System.Drawing.Color.White;
             this.tbRate.Font = new System.Drawing.Font("Noto Sans CJK SC Bold", 16F, System.Drawing.FontStyle.Bold);
-            this.tbRate.Location = new System.Drawing.Point(94, 128);
+            this.tbRate.Location = new System.Drawing.Point(83, 128);
             this.tbRate.Name = "tbRate";
-            this.tbRate.Size = new System.Drawing.Size(94, 39);
+            this.tbRate.Size = new System.Drawing.Size(82, 39);
             this.tbRate.TabIndex = 3;
             this.tbRate.Text = "50";
             this.tbRate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnRateKeyPress);
-            // 
-            // WavelinePanel
-            // 
-            this.WavelinePanel.BackColor = System.Drawing.Color.White;
-            this.WavelinePanel.Controls.Add(this.detail);
-            this.WavelinePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.WavelinePanel.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
-            this.WavelinePanel.ForeColor = System.Drawing.Color.Black;
-            this.WavelinePanel.Location = new System.Drawing.Point(0, 0);
-            this.WavelinePanel.Margin = new System.Windows.Forms.Padding(0);
-            this.WavelinePanel.Name = "WavelinePanel";
-            this.WavelinePanel.Size = new System.Drawing.Size(571, 357);
-            this.WavelinePanel.TabIndex = 5;
-            this.WavelinePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.WavelinePanel_Paint);
             // 
             // tableLayoutPanel2
             // 
@@ -312,42 +310,15 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(571, 60);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(500, 60);
             this.tableLayoutPanel2.TabIndex = 6;
-            // 
-            // pnlChart
-            // 
-            this.pnlChart.BackColor = System.Drawing.Color.White;
-            this.tlpMain.SetColumnSpan(this.pnlChart, 2);
-            this.pnlChart.Controls.Add(this.WavelinePanel);
-            this.pnlChart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlChart.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
-            this.pnlChart.ForeColor = System.Drawing.Color.Black;
-            this.pnlChart.Location = new System.Drawing.Point(0, 178);
-            this.pnlChart.Margin = new System.Windows.Forms.Padding(0);
-            this.pnlChart.Name = "pnlChart";
-            this.pnlChart.Size = new System.Drawing.Size(571, 357);
-            this.pnlChart.TabIndex = 5;
-            this.pnlChart.Paint += new System.Windows.Forms.PaintEventHandler(this.WavelinePanel_Paint);
-            // 
-            // picChannel
-            // 
-            this.picChannel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picChannel.Image = global::PTool.Properties.Resources.icon_1;
-            this.picChannel.Location = new System.Drawing.Point(3, 64);
-            this.picChannel.Name = "picChannel";
-            this.tlpChannel.SetRowSpan(this.picChannel, 2);
-            this.picChannel.Size = new System.Drawing.Size(51, 50);
-            this.picChannel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picChannel.TabIndex = 0;
-            this.picChannel.TabStop = false;
             // 
             // picStart
             // 
             this.picStart.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.picStart.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picStart.Image = global::PTool.Properties.Resources.icon_start_Blue;
-            this.picStart.Location = new System.Drawing.Point(69, 5);
+            this.picStart.Location = new System.Drawing.Point(57, 5);
             this.picStart.Name = "picStart";
             this.picStart.Size = new System.Drawing.Size(51, 50);
             this.picStart.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -360,7 +331,7 @@
             this.picStop.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.picStop.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picStop.Image = global::PTool.Properties.Resources.icon_stop_blue;
-            this.picStop.Location = new System.Drawing.Point(259, 5);
+            this.picStop.Location = new System.Drawing.Point(223, 5);
             this.picStop.Name = "picStop";
             this.picStop.Size = new System.Drawing.Size(51, 50);
             this.picStop.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -373,7 +344,7 @@
             this.picDetail.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.picDetail.Cursor = System.Windows.Forms.Cursors.Hand;
             this.picDetail.Image = global::PTool.Properties.Resources.icon_tablelist_blue;
-            this.picDetail.Location = new System.Drawing.Point(450, 5);
+            this.picDetail.Location = new System.Drawing.Point(390, 5);
             this.picDetail.Name = "picDetail";
             this.picDetail.Size = new System.Drawing.Size(51, 50);
             this.picDetail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -381,10 +352,39 @@
             this.picDetail.TabStop = false;
             this.picDetail.Click += new System.EventHandler(this.picDetail_Click);
             // 
+            // pnlChart
+            // 
+            this.pnlChart.BackColor = System.Drawing.Color.White;
+            this.tlpMain.SetColumnSpan(this.pnlChart, 2);
+            this.pnlChart.Controls.Add(this.WavelinePanel);
+            this.pnlChart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlChart.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
+            this.pnlChart.ForeColor = System.Drawing.Color.Black;
+            this.pnlChart.Location = new System.Drawing.Point(0, 178);
+            this.pnlChart.Margin = new System.Windows.Forms.Padding(0);
+            this.pnlChart.Name = "pnlChart";
+            this.pnlChart.Size = new System.Drawing.Size(500, 357);
+            this.pnlChart.TabIndex = 5;
+            this.pnlChart.Paint += new System.Windows.Forms.PaintEventHandler(this.WavelinePanel_Paint);
+            // 
+            // WavelinePanel
+            // 
+            this.WavelinePanel.BackColor = System.Drawing.Color.White;
+            this.WavelinePanel.Controls.Add(this.detail);
+            this.WavelinePanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.WavelinePanel.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
+            this.WavelinePanel.ForeColor = System.Drawing.Color.Black;
+            this.WavelinePanel.Location = new System.Drawing.Point(0, 0);
+            this.WavelinePanel.Margin = new System.Windows.Forms.Padding(0);
+            this.WavelinePanel.Name = "WavelinePanel";
+            this.WavelinePanel.Size = new System.Drawing.Size(500, 357);
+            this.WavelinePanel.TabIndex = 5;
+            this.WavelinePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.WavelinePanel_Paint);
+            // 
             // detail
             // 
             this.detail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(113)))), ((int)(((byte)(185)))));
-            this.detail.Location = new System.Drawing.Point(64, 118);
+            this.detail.Location = new System.Drawing.Point(31, 123);
             this.detail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.detail.Name = "detail";
             this.detail.P0 = 0F;
@@ -400,21 +400,21 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.tlpMain);
             this.Name = "Chart";
-            this.Size = new System.Drawing.Size(571, 595);
+            this.Size = new System.Drawing.Size(500, 595);
             this.Load += new System.EventHandler(this.Chart_Load);
             this.EnabledChanged += new System.EventHandler(this.Chart_EnabledChanged);
             this.tlpMain.ResumeLayout(false);
             this.tlpChannel.ResumeLayout(false);
             this.tlpChannel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picChannel)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.WavelinePanel.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
-            this.pnlChart.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picChannel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picStop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDetail)).EndInit();
+            this.pnlChart.ResumeLayout(false);
+            this.WavelinePanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

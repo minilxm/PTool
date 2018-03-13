@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon_logo.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ApplicationClient">
       <HintPath>..\lib\ApplicationClient.dll</HintPath>
@@ -173,6 +176,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="image\close_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="icon_logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
