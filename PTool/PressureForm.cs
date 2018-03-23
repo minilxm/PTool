@@ -27,15 +27,12 @@ namespace PTool
         private ProductID m_LocalPid = ProductID.GrasebyC6;//默认显示的是C6
         private int m_SampleInterval = 500;//采样频率：毫秒
 
-
-
         public PressureForm()
         {
             InitializeComponent();
             InitUI();
         }
 
-      
         private void PressureForm_Load(object sender, EventArgs e)
         {
             InitPumpType();
@@ -55,6 +52,11 @@ namespace PTool
                     m_SampleInterval = 500;
                 chart1.SampleInterval = m_SampleInterval;
                 chart2.SampleInterval = m_SampleInterval;
+                string strTool1 = ConfigurationManager.AppSettings.Get("Tool1");
+                string strTool2 = ConfigurationManager.AppSettings.Get("Tool2");
+                tbToolingNo.Text = strTool1;
+                tbToolingNo2.Text = strTool2;
+
                 #region 读GrasebyC6压力范围
                 ConfigurationSectionGroup group = config.GetSectionGroup("GrasebyC6");
                 string scetionGroupName = string.Empty;
@@ -135,11 +137,20 @@ namespace PTool
                     }
                 }
                 #endregion
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show("PTool.config文件参数配置错误，请先检查该文件后再重新启动程序!");
+                MessageBox.Show("PTool.config文件参数配置错误，请先检查该文件后再重新启动程序!" + ex.Message);
             }
+        }
+
+        private void SaveLastToolingNo()
+        {
+            Configuration cfa = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            cfa.AppSettings.Settings["Tool1"].Value = tbToolingNo.Text;
+            cfa.AppSettings.Settings["Tool2"].Value = tbToolingNo2.Text;
+            cfa.Save();
         }
 
         private void InitPumpType()
@@ -171,6 +182,10 @@ namespace PTool
         {
             StartOrStopArgs args = e as StartOrStopArgs;
             cbPumpType.Enabled = args.IsStart;
+            chart1.ToolingNo = tbToolingNo.Text;
+            chart2.ToolingNo = tbToolingNo2.Text;
+            chart1.PumpNo = tbPumpNo.Text;
+            chart2.PumpNo = tbPumpNo.Text;
         }
 
         private void tlpTitle_MouseDown(object sender, MouseEventArgs e)
@@ -219,8 +234,27 @@ namespace PTool
 
         private void picCloseWindow_Click(object sender, EventArgs e)
         {
+            SaveLastToolingNo();
             this.Close();
         }
 
+    }
+
+    public class SampleData
+    {
+        public DateTime m_SampleTime = DateTime.Now;
+        public float m_PressureValue;
+        public float m_Weight;
+
+        public SampleData()
+        {
+        }
+
+        public SampleData(DateTime sampleTime, float pressureVale, float weight)
+        {
+            m_SampleTime = sampleTime;
+            m_PressureValue = pressureVale;
+            m_Weight = weight;
+        }
     }
 }

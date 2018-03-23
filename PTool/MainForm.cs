@@ -1680,21 +1680,5 @@ namespace PTool
        
     }
 
-    public class SampleData
-    {
-        public DateTime m_SampleTime = DateTime.Now;
-        public float    m_PressureValue;
-        public float    m_Weight;
-
-        public SampleData()
-        {
-        }
-
-        public SampleData(DateTime sampleTime, float pressureVale, float weight)
-        {
-            m_SampleTime    = sampleTime;
-            m_PressureValue = pressureVale;
-            m_Weight        = weight;
-        }
-    }
+   
 }

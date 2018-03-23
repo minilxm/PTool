@@ -354,7 +354,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PressureForm";
-            this.Text = "PressureForm";
+            this.Text = "压力测试工具";
             this.Load += new System.EventHandler(this.PressureForm_Load);
             this.tlpMain.ResumeLayout(false);
             this.tlpTitle.ResumeLayout(false);

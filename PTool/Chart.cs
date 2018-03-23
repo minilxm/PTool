@@ -150,6 +150,7 @@ namespace PTool
                 m_ConnResponse.SetStopControlResponse += new EventHandler<ResponseEventArgs<String>>(SetStopControl);
                 m_ConnResponse.GetPressureSensorResponse += new EventHandler<ResponseEventArgs<Misc.PressureSensorInfo>>(GetPressureSensor);
                 m_ConnResponse.SetPressureCalibrationParameterResponse += new EventHandler<ResponseEventArgs<String>>(SetPressureCalibrationParameter);
+                m_ConnResponse.SetPressureCalibrationPValueResponse += new EventHandler<ResponseEventArgs<String>>(SetPressureCalibrationPValue);
             }
         }
 
@@ -162,6 +163,7 @@ namespace PTool
                 m_ConnResponse.SetStopControlResponse -= new EventHandler<ResponseEventArgs<String>>(SetStopControl);
                 m_ConnResponse.GetPressureSensorResponse -= new EventHandler<ResponseEventArgs<Misc.PressureSensorInfo>>(GetPressureSensor);
                 m_ConnResponse.SetPressureCalibrationParameterResponse -= new EventHandler<ResponseEventArgs<String>>(SetPressureCalibrationParameter);
+                m_ConnResponse.SetPressureCalibrationPValueResponse -= new EventHandler<ResponseEventArgs<String>>(SetPressureCalibrationPValue);
             }
         }
 
@@ -282,7 +284,7 @@ namespace PTool
                 if (m_ConnResponse.IsOpen())
                 {
                     m_ConnResponse.SetStopControl(GlobalResponse.CommandPriority.High);
-                    RemoveHandler();
+                    //RemoveHandler();
                     Thread.Sleep(500);
                     CalcuatePressure(m_LocalPid, m_Ch1SampleDataList);
                     Thread.Sleep(500);
@@ -297,7 +299,7 @@ namespace PTool
                 fileName = string.Format("{0}{1}道{2}{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
             else
                 fileName = string.Format("{0}{1}{2}", m_LocalPid.ToString(), m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
-            string path = Path.GetDirectoryName(Assembly.GetAssembly(typeof(MainForm)).Location) + "\\压力调试数据";
+            string path = Path.GetDirectoryName(Assembly.GetAssembly(typeof(PressureForm)).Location) + "\\压力调试数据";
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
             string saveFileName = path + "\\" + fileName + ".xlsx";
@@ -315,7 +317,6 @@ namespace PTool
         {
             if (m_Ch1SampleDataList.Count <= 1)
                 return;
-            int interval = 1;// (int)m_Timer.Interval / 1000;
             Rectangle rect = m_Rect;
             Font xValuefont = new Font("宋体", 7);
             Font fontTitle = new Font("宋体", 8);
@@ -436,7 +437,6 @@ namespace PTool
         {
             if (m_Ch1SampleDataList.Count <= 1)
                 return;
-            int interval = 1;// (int)m_Timer.Interval / 1000;
             Rectangle rect = m_Rect;
             Font xValuefont = new Font("宋体", 7);
             Font fontTitle = new Font("宋体", 8);
@@ -649,13 +649,35 @@ namespace PTool
                 this.BeginInvoke(new EventHandler<ResponseEventArgs<string>>(SetPressureCalibrationParameter), new object[] { sender, args });
                 return;
             }
-
             if (String.Empty != args.ErrorMessage)
             {
+                Logger.Instance().Error("写入压力数据失败");
             }
             else
             {
+                Logger.Instance().Info("写入压力数据成功");
+            }
+        }
 
+        /// <summary>
+        /// P值写入响应函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        private void SetPressureCalibrationPValue(object sender, ResponseEventArgs<string> args)
+        {
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke(new EventHandler<ResponseEventArgs<string>>(SetPressureCalibrationPValue), new object[] { sender, args });
+                return;
+            }
+            if (String.Empty != args.ErrorMessage)
+            {
+                Logger.Instance().Error("写入P值失败");
+            }
+            else
+            {
+                Logger.Instance().Info("写入P值成功");
             }
         }
 
@@ -738,7 +760,7 @@ namespace PTool
             }
             else
             {
-                title = string.Format("泵型号：{0}", m_LocalPid.ToString());
+                title = string.Format("泵型号：{0} 产品序号:{1} 工装编号:{2}", m_LocalPid.ToString(),m_PumpNo, m_ToolingNo);
             }
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("压力调试数据");
@@ -782,7 +804,7 @@ namespace PTool
             }
             else
             {
-                title = string.Format("泵型号：{0}", m_LocalPid.ToString());
+                title = string.Format("泵型号：{0} 产品序号:{1} 工装编号:{2}", m_LocalPid.ToString(), m_PumpNo, m_ToolingNo);
             }
             var wb = new XLWorkbook();
             var ws = wb.Worksheets.Add("压力调试数据");
@@ -884,6 +906,9 @@ namespace PTool
         {
             if (sampleDataList == null || sampleDataList.Count == 0)
                 return;
+            float pValue = FindZeroPValue(sampleDataList);
+            WritePValue2Pump(pValue);
+            Logger.Instance().InfoFormat("测量结束，P值为{0}", pValue);
             List<PressureParameter> parameters = new List<PressureParameter>();
             ProductPressure pp = PressureManager.Instance().GetPressureByProductID(pid);
             if (pp == null)
@@ -942,7 +967,7 @@ namespace PTool
             WritePressureCaliParameter2Pump(caliParameters);
 
             //
-            string path = Path.GetDirectoryName(Assembly.GetAssembly(typeof(MainForm)).Location) + "\\数据导出";
+            string path = Path.GetDirectoryName(Assembly.GetAssembly(typeof(PressureForm)).Location) + "\\数据导出";
             string fileName = m_PumpNo;
             if (m_LocalPid == ProductID.GrasebyF6 || m_LocalPid == ProductID.WZS50F6)
                 fileName = string.Format("{0}{1}道{2}{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
@@ -983,15 +1008,56 @@ namespace PTool
             }
         }
 
+        /// <summary>
+        /// 找到重量为0，P值最大的
+        /// </summary>
+        /// <param name="sampleDataList"></param>
+        private float FindZeroPValue(List<SampleData> sampleDataList)
+        {
+            if (sampleDataList == null || sampleDataList.Count == 0)
+                return 0;
+            float maxP = 0;
+            for (int iLoop = 0; iLoop < sampleDataList.Count; iLoop++)
+            {
+               if(Math.Abs(sampleDataList[iLoop].m_Weight-0)<=0.000001)
+               {
+                   maxP = sampleDataList[iLoop].m_PressureValue;
+               }
+               else
+               {
+                   break;
+               }
+            }
+            return maxP;
+        }
+
+        /// <summary>
+        /// 写入LCH压力档值
+        /// </summary>
+        /// <param name="caliParas"></param>
         private void WritePressureCaliParameter2Pump(List<PressureCalibrationParameter> caliParas)
         {
             if (caliParas == null || caliParas.Count == 0)
                 return;
             for (int i = 0; i < caliParas.Count; i++)
             {
+                Logger.Instance().InfoFormat("准备写入压力数据Size={0},L={1},C={2},H={3}", (byte)(caliParas[i].m_SyringeSize), caliParas[i].m_PressureL, caliParas[i].m_PressureC, caliParas[i].m_PressureH);
                 m_ConnResponse.SetPressureCalibrationParameter((byte)(caliParas[i].m_SyringeSize), caliParas[i].m_PressureL, caliParas[i].m_PressureC, caliParas[i].m_PressureH);
+                Logger.Instance().Info("写入压力数据完毕，等待泵回应......");
                 Thread.Sleep(1000);
             }
+        }
+
+        /// <summary>
+        /// 写入P值
+        /// </summary>
+        /// <param name="caliParas"></param>
+        private void WritePValue2Pump(float p)
+        {
+            Logger.Instance().InfoFormat("准备写入P值 {0}", p);
+            m_ConnResponse.SetPressureCalibrationPValue(p);
+            Logger.Instance().Info("写入P值完毕，等待泵回应......");
+            Thread.Sleep(1000);
         }
 
         private void picStart_Click(object sender, EventArgs e)
@@ -1071,7 +1137,6 @@ namespace PTool
                 MessageBox.Show("选择的泵类型错误，请联系管理员!");
                 return;
             }
-
             if (m_ConnResponse == null)
                 m_ConnResponse = new GlobalResponse(pid, Misc.CommunicationProtocolType.General);
             if (m_ConnResponse.IsOpen())
