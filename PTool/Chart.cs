@@ -1009,26 +1009,18 @@ namespace PTool
         }
 
         /// <summary>
-        /// 找到重量为0，P值最大的
+        /// 找到P值最小的
         /// </summary>
         /// <param name="sampleDataList"></param>
         private float FindZeroPValue(List<SampleData> sampleDataList)
         {
             if (sampleDataList == null || sampleDataList.Count == 0)
-                return 0;
-            float maxP = 0;
-            for (int iLoop = 0; iLoop < sampleDataList.Count; iLoop++)
             {
-               if(Math.Abs(sampleDataList[iLoop].m_Weight-0)<=0.000001)
-               {
-                   maxP = sampleDataList[iLoop].m_PressureValue;
-               }
-               else
-               {
-                   break;
-               }
+                Logger.Instance().Error("测量数据为空，无法确定P值大小!");
+                return 0;
             }
-            return maxP;
+            float minP = m_Ch1SampleDataList.Min(x => x.m_PressureValue);
+            return minP;
         }
 
         /// <summary>
@@ -1066,12 +1058,14 @@ namespace PTool
             WavelinePanel.Invalidate();
 
             #region 参数输入检查
+            float weight = 0;
+            float rate = 0;
+
             if (cbToolingPort.SelectedIndex < 0)
             {
                 MessageBox.Show("请选择工装串口");
                 return;
             }
-            float weight = 0;
             if (!float.TryParse(lbWeight.Text, out weight))
             {
                 MessageBox.Show("工装串口连接错误，请正确选择串口！");
@@ -1093,7 +1087,6 @@ namespace PTool
                 MessageBox.Show("请输入速率！");
                 return;
             }
-            float rate = 0;
             if (!float.TryParse(tbRate.Text, out rate))
             {
                 MessageBox.Show("请正确输入速率！");
