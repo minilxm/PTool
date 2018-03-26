@@ -1130,12 +1130,12 @@ namespace PTool
                 MessageBox.Show("选择的泵类型错误，请联系管理员!");
                 return;
             }
-            if (m_ConnResponse == null)
-                m_ConnResponse = new GlobalResponse(pid, Misc.CommunicationProtocolType.General);
-            if (m_ConnResponse.IsOpen())
+          
+            if (m_ConnResponse!=null && m_ConnResponse.IsOpen())
             {
                 m_ConnResponse.CloseConnection();
             }
+            m_ConnResponse = new GlobalResponse(pid, Misc.CommunicationProtocolType.General);
             m_ConnResponse.Initialize(cbPumpPort.Items[cbPumpPort.SelectedIndex].ToString(), BAUDRATE);
             RemoveHandler();
             AddHandler();
