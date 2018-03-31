@@ -49,7 +49,7 @@ namespace PTool
         private PTooling m_PTool = null;
         private PTooling m_DetectPTool = null;
         private Graseby9600 m_GrasebyDevice = new Graseby9600();//只用于串口刷新
-        private ProductID m_LocalPid = ProductID.GrasebyC6;//默认显示的是C6
+        private PumpID m_LocalPid = PumpID.GrasebyC6;//默认显示的是C6
         private System.Timers.Timer m_Ch1Timer = new System.Timers.Timer();
         private int m_SampleInterval = 500;//采样频率：毫秒
 
@@ -66,6 +66,12 @@ namespace PTool
         /// 当启动或停止时通知主界面
         /// </summary>
         public event EventHandler<EventArgs> SamplingStartOrStop;
+
+        /// <summary>
+        /// 当双道泵，测量结束后通知主界面，把数据传入
+        /// </summary>
+        public event EventHandler<DoublePumpDataArgs> OnSamplingComplete;
+
 
         /// <summary>
         /// 采样间隔
@@ -189,7 +195,7 @@ namespace PTool
 
         #endregion
 
-        public void SetPid(ProductID pid)
+        public void SetPid(PumpID pid)
         {
             detail.Pid = pid;
             m_LocalPid = pid;
@@ -232,10 +238,22 @@ namespace PTool
             SetWeightValue(args.Weight, false);
             DrawSingleAccuracyMap();
             //当采集到的重量大于配置参数时，可以停止采集，并计算相关数据写入到泵中
-            float max = PressureManager.Instance().GetMaxBySizeLevel(m_LocalPid, 50, Misc.OcclusionLevel.H);
+            PumpID pid = PumpID.None;
+            switch (m_LocalPid)
+            {
+                case PumpID.GrasebyF6_2:
+                    pid = PumpID.GrasebyF6;
+                    break;
+                case PumpID.WZS50F6_2:
+                    pid = PumpID.WZS50F6;
+                    break;
+                default:
+                    pid = m_LocalPid;
+                    break;
+            }
+            float max = PressureManager.Instance().GetMaxBySizeLevel(pid, 50, Misc.OcclusionLevel.H);
             if (max <= args.Weight)
             {
-                //是否要自动停止？？？？？？？？？？？？？？？
                 Complete(1);
                 AlertMessageWhenComplete(string.Format("压力值已超出最大范围{0},调试结束!", max));
             }
@@ -287,6 +305,11 @@ namespace PTool
                     //RemoveHandler();
                     Thread.Sleep(500);
                     CalcuatePressure(m_LocalPid, m_Ch1SampleDataList);
+                    if (m_LocalPid == PumpID.GrasebyF6_2 || m_LocalPid == PumpID.WZS50F6_2)
+                    {
+                        if (OnSamplingComplete != null && m_Ch1SampleDataList != null && m_Ch1SampleDataList.Count>0)
+                            OnSamplingComplete(this, new DoublePumpDataArgs(m_Ch1SampleDataList));
+                    }
                     Thread.Sleep(500);
                     m_ConnResponse.CloseConnection();
                 }
@@ -295,7 +318,7 @@ namespace PTool
                 m_PTool.Close();
 
             string fileName = m_PumpNo;
-            if (m_LocalPid == ProductID.GrasebyF6 || m_LocalPid == ProductID.WZS50F6)
+            if (m_LocalPid == PumpID.GrasebyF6 || m_LocalPid == PumpID.WZS50F6)
                 fileName = string.Format("{0}{1}道{2}{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
             else
                 fileName = string.Format("{0}{1}{2}", m_LocalPid.ToString(), m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
@@ -519,28 +542,28 @@ namespace PTool
 
             switch (m_LocalPid)
             {
-                case ProductID.GrasebyC6:
+                case PumpID.GrasebyC6:
                     m_GrasebyDevice.SetDeviceType(DeviceType.GrasebyC6);
                     break;
-                case ProductID.GrasebyF6:
+                case PumpID.GrasebyF6:
                     m_GrasebyDevice.SetDeviceType(DeviceType.GrasebyF6);
                     break;
-                case ProductID.GrasebyC6T:
+                case PumpID.GrasebyC6T:
                     m_GrasebyDevice.SetDeviceType(DeviceType.GrasebyC6T);
                     break;
-                case ProductID.Graseby2000:
+                case PumpID.Graseby2000:
                     m_GrasebyDevice.SetDeviceType(DeviceType.Graseby2000);
                     break;
-                case ProductID.Graseby2100:
+                case PumpID.Graseby2100:
                     m_GrasebyDevice.SetDeviceType(DeviceType.Graseby2100);
                     break;
-                case ProductID.WZ50C6:
+                case PumpID.WZ50C6:
                     m_GrasebyDevice.SetDeviceType(DeviceType.WZ50C6);
                     break;
-                case ProductID.WZS50F6:
+                case PumpID.WZS50F6:
                     m_GrasebyDevice.SetDeviceType(DeviceType.WZS50F6);
                     break;
-                case ProductID.WZ50C6T:
+                case PumpID.WZ50C6T:
                     m_GrasebyDevice.SetDeviceType(DeviceType.WZ50C6T);
                     break;
             }
@@ -754,7 +777,7 @@ namespace PTool
             if (sampleDataList == null || sampleDataList.Count == 0)
                 return;
             string title = string.Empty;
-            if (m_LocalPid == ProductID.GrasebyF6 || m_LocalPid == ProductID.WZS50F6)
+            if (m_LocalPid == PumpID.GrasebyF6 || m_LocalPid == PumpID.WZS50F6)
             {
                 title = string.Format("泵型号:{0}{1}道 产品序号:{2} 工装编号:{3}", m_LocalPid.ToString(), channel, m_PumpNo, m_ToolingNo);
             }
@@ -787,7 +810,6 @@ namespace PTool
             wb.SaveAs(name);
         }
 
-       
         /// <summary>
         /// 生成第三方公司需要的表格
         /// </summary>
@@ -798,7 +820,7 @@ namespace PTool
             if (caliParameters == null || caliParameters.Count == 0)
                 return;
             string title = string.Empty;
-            if (m_LocalPid == ProductID.GrasebyF6 || m_LocalPid == ProductID.WZS50F6)
+            if (m_LocalPid == PumpID.GrasebyF6 || m_LocalPid == PumpID.WZS50F6)
             {
                 title = string.Format("泵型号:{0}{1}道 产品序号:{2} 工装编号:{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, m_ToolingNo);
             }
@@ -897,18 +919,237 @@ namespace PTool
                 ws.Cell(2, ++columnIndex).Value = para.m_PressureH * 100;
             }
             wb.SaveAs(name);
-            detail.P0 = m_Ch1SampleDataList.Min(x => x.m_PressureValue) * 100;
-            detail.CaliParameters = caliParameters;
         }
 
+        /// <summary>
+        /// 双道泵生成报告,两道数据放在一张表格中
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="sampleDataList"></param>
+        public void GenDoublePunmpReport(string name, List<List<SampleData>> sampleDataList)
+        {
+            if (sampleDataList == null || sampleDataList.Count < 2)
+                return;
+            List<PressureParameter> []parameters = new List<PressureParameter>[2];
+            parameters[0] = new List<PressureParameter>();
+            parameters[1] = new List<PressureParameter>();
+            PumpID pid = PumpID.None;
+            switch (m_LocalPid)
+            {
+                case PumpID.GrasebyF6_2:
+                    pid = PumpID.GrasebyF6;
+                    break;
+                case PumpID.WZS50F6_2:
+                    pid = PumpID.WZS50F6;
+                    break;
+                default:
+                    pid = m_LocalPid;
+                    break;
+            }
+            ProductPressure pp = PressureManager.Instance().GetPressureByProductID(pid);
+            if (pp == null)
+                return;
+            List<LevelPressure> lps = pp.GetLevelPressureList();
+            List<float> midWeights = new List<float>();
+            List<int> sizes = new List<int>();
+            if (pid == PumpID.WZS50F6 || pid == PumpID.GrasebyF6)
+                sizes.Add(10);
+            sizes.Add(20);
+            sizes.Add(30);
+            sizes.Add(50);
 
-        private void CalcuatePressure(ProductID pid, List<SampleData> sampleDataList)
+            foreach (var size in sizes)
+            {
+                foreach (Misc.OcclusionLevel level in Enum.GetValues(typeof(Misc.OcclusionLevel)))
+                {
+                    LevelPressure lp = lps.Find((x) => { return x.m_Level == level; });
+                    if (lp != null)
+                    {
+                        SizePressure sp = lp.Find(size);
+                        if (sp != null)
+                        {
+                            PressureParameter para = new PressureParameter(size, level, sp.m_Mid, 0);
+                            parameters[0].Add(para);
+                            PressureParameter para2 = new PressureParameter(size, level, sp.m_Mid, 0);
+                            parameters[1].Add(para2);
+                        }
+                    }
+                }
+            }
+            //找到相关的值
+            FindNearestPValue(ref parameters[0], sampleDataList[0]);
+            FindNearestPValue(ref parameters[1], sampleDataList[1]);
+
+            List<PressureCalibrationParameter> []caliParameters = new List<PressureCalibrationParameter>[2];
+            caliParameters[0] = new List<PressureCalibrationParameter>();
+            caliParameters[1] = new List<PressureCalibrationParameter>();
+            foreach (var size in sizes)
+            {
+                PressureCalibrationParameter p = new PressureCalibrationParameter();
+                PressureCalibrationParameter p2 = new PressureCalibrationParameter();
+                p.m_SyringeSize = size;
+                p2.m_SyringeSize = size;
+                List<PressureParameter> findobjs = parameters[0].FindAll((x) => { return x.m_SyringeSize == size; });
+                List<PressureParameter> findobjs2 = parameters[1].FindAll((x) => { return x.m_SyringeSize == size; });
+                foreach (var obj in findobjs)
+                {
+                    switch (obj.m_Level)
+                    {
+                        case Misc.OcclusionLevel.L:
+                            p.m_PressureL = obj.m_Pressure;
+                            break;
+                        case Misc.OcclusionLevel.C:
+                            p.m_PressureC = obj.m_Pressure;
+                            break;
+                        case Misc.OcclusionLevel.H:
+                            p.m_PressureH = obj.m_Pressure;
+                            break;
+                        default: break;
+                    }
+                }
+                foreach (var obj in findobjs2)
+                {
+                    switch (obj.m_Level)
+                    {
+                        case Misc.OcclusionLevel.L:
+                            p2.m_PressureL = obj.m_Pressure;
+                            break;
+                        case Misc.OcclusionLevel.C:
+                            p2.m_PressureC = obj.m_Pressure;
+                            break;
+                        case Misc.OcclusionLevel.H:
+                            p2.m_PressureH = obj.m_Pressure;
+                            break;
+                        default: break;
+                    }
+                }
+                caliParameters[0].Add(p);
+                caliParameters[1].Add(p2);
+            }
+
+            if (caliParameters == null || caliParameters.Length == 0)
+                return;
+            string title = string.Empty;
+            if (m_LocalPid == PumpID.GrasebyF6 || m_LocalPid == PumpID.WZS50F6) //if (m_LocalPid == PumpID.GrasebyF6_2 || m_LocalPid == PumpID.WZS50F6_2)
+            {
+                title = string.Format("泵型号:{0}{1}道 产品序号:{2} 工装编号:{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, m_ToolingNo);
+            }
+            else
+            {
+                title = string.Format("泵型号：{0} 产品序号:{1} 工装编号:{2}", m_LocalPid.ToString(), m_PumpNo, m_ToolingNo);
+            }
+            var wb = new XLWorkbook();
+            var ws = wb.Worksheets.Add("压力调试数据");
+            int columnIndex = 0, rowIndex = 2;
+            ws.Cell(1, ++columnIndex).Value = "机器编号";
+            ws.Cell(1, ++columnIndex).Value = "机器型号";
+            ws.Cell(1, ++columnIndex).Value = "道数";
+            ws.Cell(1, ++columnIndex).Value = "工装编号";
+            ws.Cell(1, ++columnIndex).Value = "P0值";
+            ws.Cell(1, ++columnIndex).Value = "10mlL预设值";
+            ws.Cell(1, ++columnIndex).Value = "10mlC预设值";
+            ws.Cell(1, ++columnIndex).Value = "10mlH预设值";
+            ws.Cell(1, ++columnIndex).Value = "20mlL预设值";
+            ws.Cell(1, ++columnIndex).Value = "20mlC预设值";
+            ws.Cell(1, ++columnIndex).Value = "20mlH预设值";
+            ws.Cell(1, ++columnIndex).Value = "30mlL预设值";
+            ws.Cell(1, ++columnIndex).Value = "30mlC预设值";
+            ws.Cell(1, ++columnIndex).Value = "30mlH预设值";
+            ws.Cell(1, ++columnIndex).Value = "50mlL预设值";
+            ws.Cell(1, ++columnIndex).Value = "50mlC预设值";
+            ws.Cell(1, ++columnIndex).Value = "50mlH预设值";
+            ws.Cell(1, ++columnIndex).Value = "10ml低压";
+            ws.Cell(1, ++columnIndex).Value = "10ml中压";
+            ws.Cell(1, ++columnIndex).Value = "10ml高压";
+            ws.Cell(1, ++columnIndex).Value = "20ml低压";
+            ws.Cell(1, ++columnIndex).Value = "20ml中压";
+            ws.Cell(1, ++columnIndex).Value = "20ml高压";
+            ws.Cell(1, ++columnIndex).Value = "30ml低压";
+            ws.Cell(1, ++columnIndex).Value = "30ml中压";
+            ws.Cell(1, ++columnIndex).Value = "30ml高压";
+            ws.Cell(1, ++columnIndex).Value = "50ml低压";
+            ws.Cell(1, ++columnIndex).Value = "50ml中压";
+            ws.Cell(1, ++columnIndex).Value = "50ml高压";
+            for (int iLoop = 0; iLoop < sampleDataList.Count && sampleDataList.Count == 2; iLoop++)
+            {
+                columnIndex = 0;
+                ws.Cell(rowIndex, ++columnIndex).Value = m_PumpNo;
+                ws.Cell(rowIndex, ++columnIndex).Value = pid.ToString();
+                ws.Cell(rowIndex, ++columnIndex).Value = iLoop+1;
+                ws.Cell(rowIndex, ++columnIndex).Value = m_ToolingNo;
+                ws.Cell(rowIndex, ++columnIndex).Value = sampleDataList[iLoop].Min(x => x.m_PressureValue) * 100;
+                float mid = PressureManager.Instance().GetMidBySizeLevel(pid, 10, Misc.OcclusionLevel.L);
+                ws.Cell(rowIndex, ++columnIndex).Value = mid == 0 ? "" : (mid).ToString("F2");
+                mid = PressureManager.Instance().GetMidBySizeLevel(pid, 10, Misc.OcclusionLevel.C);
+                ws.Cell(rowIndex, ++columnIndex).Value = mid == 0 ? "" : (mid).ToString("F2");
+                mid = PressureManager.Instance().GetMidBySizeLevel(pid, 10, Misc.OcclusionLevel.H);
+                ws.Cell(rowIndex, ++columnIndex).Value = mid == 0 ? "" : (mid).ToString("F2");
+                ws.Cell(rowIndex, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(pid, 20, Misc.OcclusionLevel.L);
+                ws.Cell(rowIndex, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(pid, 20, Misc.OcclusionLevel.C);
+                ws.Cell(rowIndex, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(pid, 20, Misc.OcclusionLevel.H);
+                ws.Cell(rowIndex, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(pid, 30, Misc.OcclusionLevel.L);
+                ws.Cell(rowIndex, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(pid, 30, Misc.OcclusionLevel.C);
+                ws.Cell(rowIndex, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(pid, 30, Misc.OcclusionLevel.H);
+                ws.Cell(rowIndex, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(pid, 50, Misc.OcclusionLevel.L);
+                ws.Cell(rowIndex, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(pid, 50, Misc.OcclusionLevel.C);
+                ws.Cell(rowIndex, ++columnIndex).Value = PressureManager.Instance().GetMidBySizeLevel(pid, 50, Misc.OcclusionLevel.H);
+
+                PressureCalibrationParameter para = null;
+                para = caliParameters[iLoop].Find((x) => { return x.m_SyringeSize == 10; });
+                if (para != null)
+                {
+                    columnIndex = 17;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureL * 100;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureC * 100;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureH * 100;
+                }
+                para = caliParameters[iLoop].Find((x) => { return x.m_SyringeSize == 20; });
+                if (para != null)
+                {
+                    columnIndex = 20;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureL * 100;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureC * 100;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureH * 100;
+                }
+
+                para = caliParameters[iLoop].Find((x) => { return x.m_SyringeSize == 30; });
+                if (para != null)
+                {
+                    columnIndex = 23;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureL * 100;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureC * 100;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureH * 100;
+                }
+
+                para = caliParameters[iLoop].Find((x) => { return x.m_SyringeSize == 50; });
+                if (para != null)
+                {
+                    columnIndex = 26;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureL * 100;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureC * 100;
+                    ws.Cell(rowIndex, ++columnIndex).Value = para.m_PressureH * 100;
+                }
+                rowIndex++;
+            }
+            wb.SaveAs(name);
+            sampleDataList.Clear();
+        }
+
+        private void CalcuatePressure(PumpID pid, List<SampleData> sampleDataList)
         {
             if (sampleDataList == null || sampleDataList.Count == 0)
                 return;
-            float pValue = FindZeroPValue(sampleDataList);
-            WritePValue2Pump(pValue);
-            Logger.Instance().InfoFormat("测量结束，P值为{0}", pValue);
+            switch (pid)
+            {
+                case PumpID.GrasebyF6_2:
+                    pid = PumpID.GrasebyF6;
+                    break;
+                case PumpID.WZS50F6_2:
+                    pid = PumpID.WZS50F6;
+                    break;
+                default:
+                    break;
+            }
             List<PressureParameter> parameters = new List<PressureParameter>();
             ProductPressure pp = PressureManager.Instance().GetPressureByProductID(pid);
             if (pp == null)
@@ -916,7 +1157,7 @@ namespace PTool
             List<LevelPressure> lps = pp.GetLevelPressureList();
             List<float> midWeights = new List<float>();
             List<int> sizes = new List<int>();
-            if (pid == ProductID.WZS50F6 || pid == ProductID.GrasebyF6)
+            if (pid == PumpID.WZS50F6 || pid == PumpID.GrasebyF6)
                 sizes.Add(10);
             sizes.Add(20);
             sizes.Add(30);
@@ -940,6 +1181,17 @@ namespace PTool
             }
             //找到相关的值后，需要写入到泵中
             FindNearestPValue(ref parameters, sampleDataList);
+            if(!IsValid(parameters))
+            {
+                sampleDataList.Clear();
+                MessageBox.Show("测量数据异常，请检查工装压力是否释放！");
+                return;
+            }
+
+            float pValue = FindZeroPValue(sampleDataList);
+            WritePValue2Pump(pValue);
+            Logger.Instance().InfoFormat("测量结束，P值为{0}", pValue);
+
             List<PressureCalibrationParameter> caliParameters = new List<PressureCalibrationParameter>();
             foreach (var size in sizes)
             {
@@ -965,18 +1217,22 @@ namespace PTool
                 caliParameters.Add(p);
             }
             WritePressureCaliParameter2Pump(caliParameters);
-
-            //
-            string path = Path.GetDirectoryName(Assembly.GetAssembly(typeof(PressureForm)).Location) + "\\数据导出";
-            string fileName = m_PumpNo;
-            if (m_LocalPid == ProductID.GrasebyF6 || m_LocalPid == ProductID.WZS50F6)
-                fileName = string.Format("{0}{1}道{2}{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
-            else
-                fileName = string.Format("{0}{1}{2}", m_LocalPid.ToString(), m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
-            string saveFileName = path + "\\" + fileName + ".xlsx";
-            GenReport(saveFileName, caliParameters);
+            detail.P0 = m_Ch1SampleDataList.Min(x => x.m_PressureValue) * 100;
+            detail.CaliParameters = caliParameters;
+            //如果是单泵，则调用下列代码
+            if (m_LocalPid != PumpID.GrasebyF6_2 && m_LocalPid != PumpID.WZS50F6_2)
+            {
+                string path = Path.GetDirectoryName(Assembly.GetAssembly(typeof(PressureForm)).Location) + "\\数据导出";
+                string fileName = m_PumpNo;
+                if (m_LocalPid == PumpID.GrasebyF6 || m_LocalPid == PumpID.WZS50F6)
+                    fileName = string.Format("{0}{1}道{2}{3}", m_LocalPid.ToString(), m_Channel, m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
+                else
+                    fileName = string.Format("{0}{1}{2}", m_LocalPid.ToString(), m_PumpNo, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
+                if (!System.IO.Directory.Exists(path))
+                    System.IO.Directory.CreateDirectory(path);
+                string saveFileName = path + "\\" + fileName + ".xlsx";
+                GenReport(saveFileName, caliParameters);
+            }
         }
 
         /// <summary>
@@ -1052,6 +1308,25 @@ namespace PTool
             Thread.Sleep(1000);
         }
 
+        /// <summary>
+        /// 计算得出的数据是否合法
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        private bool IsValid(List<PressureParameter> parameters)
+        {
+            bool bRet = true;
+            foreach(var p in parameters)
+            {
+                if (p.m_Pressure>=p.m_MidWeight*2)
+                {
+                    bRet = false;
+                    break;
+                }
+            }
+            return bRet;
+        }
+
         private void picStart_Click(object sender, EventArgs e)
         {
             m_Ch1SampleDataList.Clear();
@@ -1098,25 +1373,31 @@ namespace PTool
             Misc.ProductID pid = Misc.ProductID.None;
             switch (m_LocalPid)
             {
-                case ProductID.WZ50C6:
+                case PumpID.GrasebyC6:
                     pid = Misc.ProductID.GrasebyC6;
                     break;
-                case ProductID.WZ50C6T:
+                case PumpID.WZ50C6:
+                    pid = Misc.ProductID.GrasebyC6;
+                    break;
+                case PumpID.WZ50C6T:
                     pid = Misc.ProductID.GrasebyC6T;
                     break;
-                case ProductID.WZS50F6:
-                    pid = Misc.ProductID.GrasebyF6;
-                    break;
-                case ProductID.Graseby2000:
+                case PumpID.Graseby2000:
                     pid = Misc.ProductID.Graseby2000;
                     break;
-                case ProductID.Graseby2100:
+                case PumpID.Graseby2100:
                     pid = Misc.ProductID.Graseby2100;
                     break;
-                case ProductID.GrasebyC6:
-                    pid = Misc.ProductID.GrasebyC6;
+                case PumpID.WZS50F6:
+                    pid = Misc.ProductID.GrasebyF6;
                     break;
-                case ProductID.GrasebyF6:
+                case PumpID.GrasebyF6:
+                    pid = Misc.ProductID.GrasebyF6;
+                    break;
+                case PumpID.GrasebyF6_2:
+                    pid = Misc.ProductID.GrasebyF6;
+                    break;
+                case PumpID.WZS50F6_2:
                     pid = Misc.ProductID.GrasebyF6;
                     break;
                 default:
@@ -1135,7 +1416,13 @@ namespace PTool
             {
                 m_ConnResponse.CloseConnection();
             }
+#if DEBUG
+            m_ConnResponse = new GlobalResponse(Misc.ProductID.GrasebyC6, Misc.CommunicationProtocolType.General);
+
+#else
             m_ConnResponse = new GlobalResponse(pid, Misc.CommunicationProtocolType.General);
+
+#endif
             m_ConnResponse.Initialize(cbPumpPort.Items[cbPumpPort.SelectedIndex].ToString(), BAUDRATE);
             RemoveHandler();
             AddHandler();

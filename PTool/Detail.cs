@@ -15,7 +15,7 @@ namespace PTool
     {
         private float m_P0 = 0;
         private List<PressureCalibrationParameter> m_CaliParameters = new List<PressureCalibrationParameter>();
-        private ProductID m_LocalPid = ProductID.GrasebyC6;//默认显示的是C6
+        private PumpID m_LocalPid = PumpID.GrasebyC6;//默认显示的是C6
 
         public float P0
         {
@@ -26,7 +26,7 @@ namespace PTool
         /// <summary>
         /// 产品ID
         /// </summary>
-        public ProductID Pid
+        public PumpID Pid
         {
             set { m_LocalPid = value; }
             get { return m_LocalPid; }

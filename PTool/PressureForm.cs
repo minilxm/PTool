@@ -24,8 +24,11 @@ namespace PTool
     {
         private bool moving = false;
         private Point oldMousePosition;
-        private ProductID m_LocalPid = ProductID.GrasebyC6;//默认显示的是C6
+        private PumpID m_LocalPid = PumpID.GrasebyC6;//默认显示的是C6
         private int m_SampleInterval = 500;//采样频率：毫秒
+        private List<List<SampleData>> m_SampleDataList = new List<List<SampleData>>();//存放双道泵上传的数据，等第二道泵结束后，一起存在一张表中
+
+
 
         public PressureForm()
         {
@@ -60,7 +63,7 @@ namespace PTool
                 #region 读GrasebyC6压力范围
                 ConfigurationSectionGroup group = config.GetSectionGroup("GrasebyC6");
                 string scetionGroupName = string.Empty;
-                ProductID pid = ProductID.GrasebyC6;
+                PumpID pid = PumpID.GrasebyC6;
                 NameValueCollection pressureCollection = null;
 
                 for (int iLoop = 0; iLoop < group.Sections.Count; iLoop++)
@@ -88,7 +91,7 @@ namespace PTool
 
                 #region 读WZ50C6压力范围
                 group = config.GetSectionGroup("WZ50C6");
-                pid = ProductID.WZ50C6;
+                pid = PumpID.GrasebyC6;
                 for (int iLoop = 0; iLoop < group.Sections.Count; iLoop++)
                 {
                     string scetionName = "WZ50C6/" + group.Sections.GetKey(iLoop);
@@ -114,7 +117,7 @@ namespace PTool
 
                 #region 读GrasebyF6压力范围
                 group = config.GetSectionGroup("GrasebyF6");
-                pid = ProductID.GrasebyF6;
+                pid = PumpID.GrasebyF6;
                 for (int iLoop = 0; iLoop < group.Sections.Count; iLoop++)
                 {
                     string scetionName = "GrasebyF6/" + group.Sections.GetKey(iLoop);
@@ -156,9 +159,9 @@ namespace PTool
         private void InitPumpType()
         {
             cbPumpType.Items.Clear();
-            cbPumpType.Items.AddRange(Enum.GetNames(typeof(ProductID)));
+            cbPumpType.Items.AddRange(ProductIDConvertor.GetAllPumpIDString().ToArray());
             cbPumpType.SelectedIndex = 0;
-            m_LocalPid = (ProductID)Enum.Parse(typeof(ProductID), cbPumpType.Items[cbPumpType.SelectedIndex].ToString(), true);
+            m_LocalPid = ProductIDConvertor.String2PumpID(cbPumpType.Items[cbPumpType.SelectedIndex].ToString());
             chart1.SetPid(m_LocalPid);
             chart2.SetPid(m_LocalPid);
         }
@@ -176,6 +179,44 @@ namespace PTool
             chart2.Enabled = false;
             chart1.SamplingStartOrStop += OnSamplingStartOrStop;
             chart2.SamplingStartOrStop += OnSamplingStartOrStop;
+            chart1.OnSamplingComplete += OnChartSamplingComplete;
+            chart2.OnSamplingComplete += OnChartSamplingComplete;
+            m_SampleDataList.Clear();
+        }
+
+        private void OnChartSamplingComplete(object sender, DoublePumpDataArgs e)
+        {
+            Chart chart = sender as Chart;
+            if (e.SampleDataList != null)
+            {
+                if (chart.Name == "chart1")
+                    m_SampleDataList.Insert(0, e.SampleDataList);
+                else
+                    m_SampleDataList.Add(e.SampleDataList);
+            }
+            if(m_SampleDataList.Count>=2)
+            {
+                //写入excel,调用chart类中函数
+                string path = Path.GetDirectoryName(Assembly.GetAssembly(typeof(PressureForm)).Location) + "\\数据导出";
+                PumpID pid = PumpID.None;
+                switch (m_LocalPid)
+                {
+                    case PumpID.GrasebyF6_2:
+                        pid = PumpID.GrasebyF6;
+                        break;
+                    case PumpID.WZS50F6_2:
+                        pid = PumpID.WZS50F6;
+                        break;
+                    default:
+                        pid = m_LocalPid;
+                        break;
+                }
+                string fileName = string.Format("{0}_{1}_{2}", pid.ToString(), tbPumpNo.Text, DateTime.Now.ToString("yyyy-MM-dd HH_mm_ss"));
+                if (!System.IO.Directory.Exists(path))
+                    System.IO.Directory.CreateDirectory(path);
+                string saveFileName = path + "\\" + fileName + ".xlsx";
+                chart1.GenDoublePunmpReport(saveFileName, m_SampleDataList);
+            }
         }
 
         private void OnSamplingStartOrStop(object sender, EventArgs e)
@@ -214,12 +255,12 @@ namespace PTool
 
         private void cbPumpType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            m_LocalPid = (ProductID)Enum.Parse(typeof(ProductID), cbPumpType.Items[cbPumpType.SelectedIndex].ToString(), true);
+            m_LocalPid = ProductIDConvertor.String2PumpID(cbPumpType.Items[cbPumpType.SelectedIndex].ToString());
 #if DEBUG
             chart2.Enabled = true;
 
 #else
-            if (m_LocalPid == ProductID.GrasebyF6 || m_LocalPid == ProductID.WZS50F6)
+            if (m_LocalPid == PumpID.GrasebyF6_2 || m_LocalPid == PumpID.WZS50F6_2)
             {
                 chart2.Enabled = true;
             }
@@ -234,6 +275,10 @@ namespace PTool
 
         private void picCloseWindow_Click(object sender, EventArgs e)
         {
+            chart1.SamplingStartOrStop -= OnSamplingStartOrStop;
+            chart2.SamplingStartOrStop -= OnSamplingStartOrStop;
+            chart1.OnSamplingComplete -= OnChartSamplingComplete;
+            chart2.OnSamplingComplete -= OnChartSamplingComplete;
             SaveLastToolingNo();
             this.Close();
         }
@@ -255,6 +300,13 @@ namespace PTool
             m_SampleTime = sampleTime;
             m_PressureValue = pressureVale;
             m_Weight = weight;
+        }
+
+        public void Copy(SampleData other)
+        {
+            this.m_SampleTime = other.m_SampleTime;
+            this.m_PressureValue = other.m_PressureValue;
+            this.m_Weight = other.m_Weight;
         }
     }
 }

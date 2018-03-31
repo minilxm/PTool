@@ -388,7 +388,7 @@
             this.detail.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.detail.Name = "detail";
             this.detail.P0 = 0F;
-            this.detail.Pid = PTool.ProductID.GrasebyC6;
+            this.detail.Pid = PTool.PumpID.GrasebyC6;
             this.detail.Size = new System.Drawing.Size(463, 160);
             this.detail.TabIndex = 6;
             this.detail.Visible = false;
