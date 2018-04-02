@@ -215,7 +215,7 @@ namespace PTool
                 if (!System.IO.Directory.Exists(path))
                     System.IO.Directory.CreateDirectory(path);
                 string saveFileName = path + "\\" + fileName + ".xlsx";
-                chart1.GenDoublePunmpReport(saveFileName, m_SampleDataList);
+                chart1.GenDoublePunmpReport(saveFileName, m_SampleDataList, tbToolingNo2.Text);
             }
         }
 
@@ -260,7 +260,7 @@ namespace PTool
             chart2.Enabled = true;
 
 #else
-            if (m_LocalPid == PumpID.GrasebyF6_2 || m_LocalPid == PumpID.WZS50F6_2)
+            if (m_LocalPid == PumpID.GrasebyF6 || m_LocalPid == PumpID.WZS50F6 || m_LocalPid == PumpID.GrasebyF6_2 || m_LocalPid == PumpID.WZS50F6_2)
             {
                 chart2.Enabled = true;
             }

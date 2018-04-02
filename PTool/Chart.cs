@@ -926,7 +926,7 @@ namespace PTool
         /// </summary>
         /// <param name="name"></param>
         /// <param name="sampleDataList"></param>
-        public void GenDoublePunmpReport(string name, List<List<SampleData>> sampleDataList)
+        public void GenDoublePunmpReport(string name, List<List<SampleData>> sampleDataList, string tool2No = "")
         {
             if (sampleDataList == null || sampleDataList.Count < 2)
                 return;
@@ -1076,7 +1076,12 @@ namespace PTool
                 ws.Cell(rowIndex, ++columnIndex).Value = m_PumpNo;
                 ws.Cell(rowIndex, ++columnIndex).Value = pid.ToString();
                 ws.Cell(rowIndex, ++columnIndex).Value = iLoop+1;
+                if(iLoop==0)
                 ws.Cell(rowIndex, ++columnIndex).Value = m_ToolingNo;
+                else if(iLoop==1)
+                    ws.Cell(rowIndex, ++columnIndex).Value = tool2No;
+                else
+                    ws.Cell(rowIndex, ++columnIndex).Value = m_ToolingNo;
                 ws.Cell(rowIndex, ++columnIndex).Value = sampleDataList[iLoop].Min(x => x.m_PressureValue) * 100;
                 float mid = PressureManager.Instance().GetMidBySizeLevel(pid, 10, Misc.OcclusionLevel.L);
                 ws.Cell(rowIndex, ++columnIndex).Value = mid == 0 ? "" : (mid).ToString("F2");
@@ -1181,7 +1186,7 @@ namespace PTool
             }
             //找到相关的值后，需要写入到泵中
             FindNearestPValue(ref parameters, sampleDataList);
-            if(!IsValid(parameters))
+            if (!IsValidEx(sampleDataList))
             {
                 sampleDataList.Clear();
                 MessageBox.Show("测量数据异常，请检查工装压力是否释放！");
@@ -1318,11 +1323,22 @@ namespace PTool
             bool bRet = true;
             foreach(var p in parameters)
             {
-                if (p.m_Pressure>=p.m_MidWeight*2)
+                if (p.m_Pressure>=p.m_MidWeight*2.5)
                 {
                     bRet = false;
                     break;
                 }
+            }
+            return bRet;
+        }
+
+        private bool IsValidEx(List<SampleData> sampleDataList)
+        {
+            bool bRet = true;
+            int iLength = sampleDataList.Count;
+            if (iLength > 0 && sampleDataList[0].m_Weight > 2.5f)
+            {
+                bRet = false;
             }
             return bRet;
         }
