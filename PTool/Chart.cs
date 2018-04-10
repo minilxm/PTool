@@ -918,6 +918,8 @@ namespace PTool
                 ws.Cell(2, ++columnIndex).Value = para.m_PressureC * 100;
                 ws.Cell(2, ++columnIndex).Value = para.m_PressureH * 100;
             }
+            ws.Range(1, 1, 2, 1).SetDataType(XLCellValues.Text);
+            ws.Range(1, 4, 2, 4).SetDataType(XLCellValues.Text);
             wb.SaveAs(name);
         }
 
@@ -1136,6 +1138,8 @@ namespace PTool
                 }
                 rowIndex++;
             }
+            ws.Range(1, 1, rowIndex, 1).SetDataType(XLCellValues.Text);
+            ws.Range(1, 4, rowIndex, 4).SetDataType(XLCellValues.Text);
             wb.SaveAs(name);
             sampleDataList.Clear();
         }
