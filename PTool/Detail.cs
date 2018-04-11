@@ -47,9 +47,32 @@ namespace PTool
             InitializeComponent();
         }
 
-        public void SetLabel()
+        public void ClearLabelValue()
         {
-
+            lbL10Right.Text = "";
+            lbC10Right.Text = "";
+            lbH10Right.Text = "";
+            lbL10Left.Text = "";
+            lbC10Left.Text = "";
+            lbH10Left.Text = "";
+            lbL20Right.Text = "";
+            lbC20Right.Text = "";
+            lbH20Right.Text = "";
+            lbL20Left.Text = "";
+            lbC20Left.Text = "";
+            lbH20Left.Text = "";
+            lbL30Right.Text = "";
+            lbC30Right.Text = "";
+            lbH30Right.Text = "";
+            lbL30Left.Text = "";
+            lbC30Left.Text = "";
+            lbH30Left.Text = "";
+            lbL50Right.Text = "";
+            lbC50Right.Text = "";
+            lbH50Right.Text = "";
+            lbL50Left.Text = "";
+            lbC50Left.Text = "";
+            lbH50Left.Text = "";
         }
 
         private void picClose_Click(object sender, EventArgs e)

@@ -1193,7 +1193,7 @@ namespace PTool
             if (!IsValidEx(sampleDataList))
             {
                 sampleDataList.Clear();
-                MessageBox.Show("测量数据异常，请检查工装压力是否释放！");
+                MessageBox.Show("测量数据异常，请重试！");
                 return;
             }
 
@@ -1340,7 +1340,27 @@ namespace PTool
         {
             bool bRet = true;
             int iLength = sampleDataList.Count;
-            if (iLength > 0 && sampleDataList[0].m_Weight > 2.5f)
+            if (iLength > 0 && sampleDataList[0].m_Weight > 1.0f)
+            {
+                bRet = false;
+                return bRet;
+            }
+            //当采集到的重量大于配置参数时，可以停止采集，并计算相关数据写入到泵中
+            PumpID pid = PumpID.None;
+            switch (m_LocalPid)
+            {
+                case PumpID.GrasebyF6_2:
+                    pid = PumpID.GrasebyF6;
+                    break;
+                case PumpID.WZS50F6_2:
+                    pid = PumpID.WZS50F6;
+                    break;
+                default:
+                    pid = m_LocalPid;
+                    break;
+            }
+            float max = PressureManager.Instance().GetMaxBySizeLevel(pid, 50, Misc.OcclusionLevel.H);
+            if (iLength > 0 && sampleDataList[iLength - 1].m_Weight < max)
             {
                 bRet = false;
             }
@@ -1349,6 +1369,9 @@ namespace PTool
 
         private void picStart_Click(object sender, EventArgs e)
         {
+            detail.P0 = 0f;
+            detail.CaliParameters.Clear();
+            detail.ClearLabelValue();
             m_Ch1SampleDataList.Clear();
             WavelinePanel.Invalidate();
 
