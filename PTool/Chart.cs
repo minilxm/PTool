@@ -1340,7 +1340,7 @@ namespace PTool
         {
             bool bRet = true;
             int iLength = sampleDataList.Count;
-            if (iLength > 0 && sampleDataList[0].m_Weight > 1.0f)
+            if (iLength > 0 && sampleDataList[0].m_PressureValue > 2.5f)
             {
                 bRet = false;
                 return bRet;
