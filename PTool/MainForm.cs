@@ -1559,7 +1559,7 @@ namespace PTool
             {
                 ws.Cell(index, 1).Value = sampleDataList[i].m_SampleTime.ToString("yyyy-MM-dd HH_mm_ss");
                 ws.Cell(index, 2).Value = sampleDataList[i].m_Weight;
-                ws.Cell(index, 3).Value = sampleDataList[i].m_PressureValue;
+                ws.Cell(index, 3).Value = sampleDataList[i].m_PressureValue*100;
                 index++;
             }
             wb.SaveAs(name);
@@ -1680,21 +1680,5 @@ namespace PTool
        
     }
 
-    public class SampleData
-    {
-        public DateTime m_SampleTime = DateTime.Now;
-        public float    m_PressureValue;
-        public float    m_Weight;
-
-        public SampleData()
-        {
-        }
-
-        public SampleData(DateTime sampleTime, float pressureVale, float weight)
-        {
-            m_SampleTime    = sampleTime;
-            m_PressureValue = pressureVale;
-            m_Weight        = weight;
-        }
-    }
+   
 }

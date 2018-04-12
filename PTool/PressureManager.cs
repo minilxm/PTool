@@ -33,7 +33,7 @@ namespace PTool
         /// <param name="lang">语言</param>
         /// <param name="brand">品牌</param>
         /// <param name="name">此语言下的品牌名称</param>
-        public void Add(ProductID pid, OcclusionLevel level, int syringeSize, float min, float mid, float max)
+        public void Add(PumpID pid, OcclusionLevel level, int syringeSize, float min, float mid, float max)
         {
           
             if (!m_HashProductPressure.ContainsKey(pid))
@@ -66,8 +66,19 @@ namespace PTool
             m_HashProductPressure.Clear();
         }
 
-        public ProductPressure GetPressureByProductID(ProductID pid)
+        public ProductPressure GetPressureByProductID(PumpID pid)
         {
+            switch (pid)
+            {
+                case PumpID.GrasebyF6_2:
+                    pid = PumpID.GrasebyF6;
+                    break;
+                case PumpID.WZS50F6_2:
+                    pid = PumpID.WZS50F6;
+                    break;
+                default:
+                    break;
+            }
             if (m_HashProductPressure.ContainsKey(pid))
                 return m_HashProductPressure[pid] as ProductPressure;
             else
@@ -81,7 +92,7 @@ namespace PTool
         /// <param name="size"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        public float GetMaxBySizeLevel(ProductID pid, int size, OcclusionLevel level)
+        public float GetMaxBySizeLevel(PumpID pid, int size, OcclusionLevel level)
         {
             ProductPressure pp = GetPressureByProductID(pid);
             if (pp == null)
@@ -94,17 +105,39 @@ namespace PTool
                 return 0;
             return sp.m_Max;
         }
+
+        /// <summary>
+        /// 读中间值
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="size"></param>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public float GetMidBySizeLevel(PumpID pid, int size, OcclusionLevel level)
+        {
+            ProductPressure pp = GetPressureByProductID(pid);
+            if (pp == null)
+                return 0;
+            LevelPressure lp = pp.Find(level);
+            if (lp == null)
+                return 0;
+            SizePressure sp = lp.Find(size);
+            if (sp == null)
+                return 0;
+            return sp.m_Mid;
+        }
+
     }
 
     public class ProductPressure
     {
-        public ProductID m_Pid = ProductID.GrasebyC6;
+        public PumpID m_Pid = PumpID.GrasebyC6;
         public List<LevelPressure> m_LevelPressureList = new List<LevelPressure>();
 
         public ProductPressure()
         { }
 
-        public ProductPressure(ProductID pid)
+        public ProductPressure(PumpID pid)
         {
             m_Pid = pid;
         }

@@ -87,7 +87,7 @@
             this.lbPumpPort.BackColor = System.Drawing.Color.Transparent;
             this.lbPumpPort.BorderColor = System.Drawing.Color.White;
             this.lbPumpPort.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.lbPumpPort.Location = new System.Drawing.Point(158, 34);
+            this.lbPumpPort.Location = new System.Drawing.Point(210, 59);
             this.lbPumpPort.Name = "lbPumpPort";
             this.lbPumpPort.Size = new System.Drawing.Size(51, 20);
             this.lbPumpPort.TabIndex = 0;
@@ -98,9 +98,10 @@
             this.cbToolingPort.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbToolingPort.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
             this.cbToolingPort.FormattingEnabled = true;
-            this.cbToolingPort.Location = new System.Drawing.Point(74, 31);
+            this.cbToolingPort.Location = new System.Drawing.Point(98, 54);
+            this.cbToolingPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cbToolingPort.Name = "cbToolingPort";
-            this.cbToolingPort.Size = new System.Drawing.Size(80, 26);
+            this.cbToolingPort.Size = new System.Drawing.Size(106, 26);
             this.cbToolingPort.TabIndex = 1;
             this.cbToolingPort.WaterText = "";
             this.cbToolingPort.SelectedIndexChanged += new System.EventHandler(this.cbToolingPort_SelectedIndexChanged);
@@ -110,9 +111,10 @@
             this.cbPumpPort.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbPumpPort.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
             this.cbPumpPort.FormattingEnabled = true;
-            this.cbPumpPort.Location = new System.Drawing.Point(210, 31);
+            this.cbPumpPort.Location = new System.Drawing.Point(280, 54);
+            this.cbPumpPort.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cbPumpPort.Name = "cbPumpPort";
-            this.cbPumpPort.Size = new System.Drawing.Size(80, 26);
+            this.cbPumpPort.Size = new System.Drawing.Size(106, 26);
             this.cbPumpPort.TabIndex = 1;
             this.cbPumpPort.WaterText = "";
             this.cbPumpPort.SelectedIndexChanged += new System.EventHandler(this.cbPumpPort_SelectedIndexChanged);
@@ -124,7 +126,7 @@
             this.lbToolingPort.BackColor = System.Drawing.Color.Transparent;
             this.lbToolingPort.BorderColor = System.Drawing.Color.White;
             this.lbToolingPort.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.lbToolingPort.Location = new System.Drawing.Point(9, 34);
+            this.lbToolingPort.Location = new System.Drawing.Point(11, 59);
             this.lbToolingPort.Name = "lbToolingPort";
             this.lbToolingPort.Size = new System.Drawing.Size(65, 20);
             this.lbToolingPort.TabIndex = 0;
@@ -137,11 +139,12 @@
             this.btnStopPumpChannel1.DownBack = null;
             this.btnStopPumpChannel1.Enabled = false;
             this.btnStopPumpChannel1.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.btnStopPumpChannel1.Location = new System.Drawing.Point(424, 68);
+            this.btnStopPumpChannel1.Location = new System.Drawing.Point(566, 119);
+            this.btnStopPumpChannel1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnStopPumpChannel1.MouseBack = null;
             this.btnStopPumpChannel1.Name = "btnStopPumpChannel1";
             this.btnStopPumpChannel1.NormlBack = null;
-            this.btnStopPumpChannel1.Size = new System.Drawing.Size(50, 26);
+            this.btnStopPumpChannel1.Size = new System.Drawing.Size(66, 45);
             this.btnStopPumpChannel1.TabIndex = 5;
             this.btnStopPumpChannel1.Text = "停止";
             this.btnStopPumpChannel1.UseVisualStyleBackColor = false;
@@ -153,11 +156,12 @@
             this.btnStartPumpChannel1.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.btnStartPumpChannel1.DownBack = null;
             this.btnStartPumpChannel1.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.btnStartPumpChannel1.Location = new System.Drawing.Point(368, 68);
+            this.btnStartPumpChannel1.Location = new System.Drawing.Point(490, 119);
+            this.btnStartPumpChannel1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnStartPumpChannel1.MouseBack = null;
             this.btnStartPumpChannel1.Name = "btnStartPumpChannel1";
             this.btnStartPumpChannel1.NormlBack = null;
-            this.btnStartPumpChannel1.Size = new System.Drawing.Size(50, 26);
+            this.btnStartPumpChannel1.Size = new System.Drawing.Size(66, 45);
             this.btnStartPumpChannel1.TabIndex = 4;
             this.btnStartPumpChannel1.Text = "开始";
             this.btnStartPumpChannel1.UseVisualStyleBackColor = false;
@@ -170,7 +174,7 @@
             this.skinLabel3.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel3.BorderColor = System.Drawing.Color.White;
             this.skinLabel3.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel3.Location = new System.Drawing.Point(430, 32);
+            this.skinLabel3.Location = new System.Drawing.Point(574, 56);
             this.skinLabel3.Name = "skinLabel3";
             this.skinLabel3.Size = new System.Drawing.Size(44, 20);
             this.skinLabel3.TabIndex = 0;
@@ -183,7 +187,7 @@
             this.lbRate.BackColor = System.Drawing.Color.Transparent;
             this.lbRate.BorderColor = System.Drawing.Color.White;
             this.lbRate.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.lbRate.Location = new System.Drawing.Point(294, 33);
+            this.lbRate.Location = new System.Drawing.Point(392, 58);
             this.lbRate.Name = "lbRate";
             this.lbRate.Size = new System.Drawing.Size(45, 20);
             this.lbRate.TabIndex = 0;
@@ -194,9 +198,10 @@
             this.cbPumpType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbPumpType.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
             this.cbPumpType.FormattingEnabled = true;
-            this.cbPumpType.Location = new System.Drawing.Point(161, 23);
+            this.cbPumpType.Location = new System.Drawing.Point(215, 40);
+            this.cbPumpType.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cbPumpType.Name = "cbPumpType";
-            this.cbPumpType.Size = new System.Drawing.Size(99, 26);
+            this.cbPumpType.Size = new System.Drawing.Size(131, 26);
             this.cbPumpType.TabIndex = 1;
             this.cbPumpType.WaterText = "";
             this.cbPumpType.SelectedIndexChanged += new System.EventHandler(this.cbPumpType_SelectedIndexChanged);
@@ -208,7 +213,7 @@
             this.skinLabel2.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel2.BorderColor = System.Drawing.Color.White;
             this.skinLabel2.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel2.Location = new System.Drawing.Point(294, 25);
+            this.skinLabel2.Location = new System.Drawing.Point(392, 44);
             this.skinLabel2.Name = "skinLabel2";
             this.skinLabel2.Size = new System.Drawing.Size(65, 20);
             this.skinLabel2.TabIndex = 0;
@@ -219,9 +224,10 @@
             this.WavelinePanel.BackColor = System.Drawing.Color.White;
             this.WavelinePanel.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
             this.WavelinePanel.ForeColor = System.Drawing.Color.Black;
-            this.WavelinePanel.Location = new System.Drawing.Point(3, 99);
+            this.WavelinePanel.Location = new System.Drawing.Point(3, 173);
+            this.WavelinePanel.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.WavelinePanel.Name = "WavelinePanel";
-            this.WavelinePanel.Size = new System.Drawing.Size(475, 406);
+            this.WavelinePanel.Size = new System.Drawing.Size(633, 710);
             this.WavelinePanel.TabIndex = 4;
             this.WavelinePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.WavelinePanel_Paint);
             // 
@@ -246,11 +252,13 @@
             this.skinGroupBox1.Controls.Add(this.lbToolingPort);
             this.skinGroupBox1.Font = new System.Drawing.Font("Microsoft YaHei", 14F);
             this.skinGroupBox1.ForeColor = System.Drawing.Color.Black;
-            this.skinGroupBox1.Location = new System.Drawing.Point(7, 121);
+            this.skinGroupBox1.Location = new System.Drawing.Point(9, 212);
+            this.skinGroupBox1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.skinGroupBox1.Name = "skinGroupBox1";
+            this.skinGroupBox1.Padding = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.skinGroupBox1.RectBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(208)))), ((int)(((byte)(255)))));
             this.skinGroupBox1.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinGroupBox1.Size = new System.Drawing.Size(480, 506);
+            this.skinGroupBox1.Size = new System.Drawing.Size(640, 885);
             this.skinGroupBox1.TabIndex = 2;
             this.skinGroupBox1.TabStop = false;
             this.skinGroupBox1.Text = "1道泵";
@@ -261,9 +269,10 @@
             // tbRateChannel1
             // 
             this.tbRateChannel1.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.tbRateChannel1.Location = new System.Drawing.Point(344, 30);
+            this.tbRateChannel1.Location = new System.Drawing.Point(458, 52);
+            this.tbRateChannel1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.tbRateChannel1.Name = "tbRateChannel1";
-            this.tbRateChannel1.Size = new System.Drawing.Size(80, 25);
+            this.tbRateChannel1.Size = new System.Drawing.Size(106, 25);
             this.tbRateChannel1.TabIndex = 4;
             this.tbRateChannel1.Text = "50";
             this.tbRateChannel1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnRateKeyPress);
@@ -275,7 +284,7 @@
             this.lbPChannel1.BackColor = System.Drawing.Color.Transparent;
             this.lbPChannel1.BorderColor = System.Drawing.Color.White;
             this.lbPChannel1.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.lbPChannel1.Location = new System.Drawing.Point(227, 70);
+            this.lbPChannel1.Location = new System.Drawing.Point(303, 122);
             this.lbPChannel1.Name = "lbPChannel1";
             this.lbPChannel1.Size = new System.Drawing.Size(39, 20);
             this.lbPChannel1.TabIndex = 0;
@@ -288,7 +297,7 @@
             this.skinLabel13.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel13.BorderColor = System.Drawing.Color.White;
             this.skinLabel13.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel13.Location = new System.Drawing.Point(167, 70);
+            this.skinLabel13.Location = new System.Drawing.Point(223, 122);
             this.skinLabel13.Name = "skinLabel13";
             this.skinLabel13.Size = new System.Drawing.Size(60, 20);
             this.skinLabel13.TabIndex = 0;
@@ -301,7 +310,7 @@
             this.lbWeightChannel1.BackColor = System.Drawing.Color.Transparent;
             this.lbWeightChannel1.BorderColor = System.Drawing.Color.White;
             this.lbWeightChannel1.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.lbWeightChannel1.Location = new System.Drawing.Point(72, 69);
+            this.lbWeightChannel1.Location = new System.Drawing.Point(96, 121);
             this.lbWeightChannel1.Name = "lbWeightChannel1";
             this.lbWeightChannel1.Size = new System.Drawing.Size(39, 20);
             this.lbWeightChannel1.TabIndex = 0;
@@ -314,7 +323,7 @@
             this.skinLabel10.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel10.BorderColor = System.Drawing.Color.White;
             this.skinLabel10.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel10.Location = new System.Drawing.Point(10, 69);
+            this.skinLabel10.Location = new System.Drawing.Point(14, 121);
             this.skinLabel10.Name = "skinLabel10";
             this.skinLabel10.Size = new System.Drawing.Size(65, 20);
             this.skinLabel10.TabIndex = 0;
@@ -327,7 +336,7 @@
             this.skinLabel9.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel9.BorderColor = System.Drawing.Color.White;
             this.skinLabel9.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel9.Location = new System.Drawing.Point(132, 69);
+            this.skinLabel9.Location = new System.Drawing.Point(176, 121);
             this.skinLabel9.Name = "skinLabel9";
             this.skinLabel9.Size = new System.Drawing.Size(26, 20);
             this.skinLabel9.TabIndex = 0;
@@ -345,11 +354,13 @@
             this.gbParameter.Controls.Add(this.tbPumpNo);
             this.gbParameter.Font = new System.Drawing.Font("Microsoft YaHei", 12F);
             this.gbParameter.ForeColor = System.Drawing.Color.Black;
-            this.gbParameter.Location = new System.Drawing.Point(7, 63);
+            this.gbParameter.Location = new System.Drawing.Point(9, 110);
+            this.gbParameter.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.gbParameter.Name = "gbParameter";
+            this.gbParameter.Padding = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.gbParameter.RectBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(208)))), ((int)(((byte)(255)))));
             this.gbParameter.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.gbParameter.Size = new System.Drawing.Size(966, 56);
+            this.gbParameter.Size = new System.Drawing.Size(1288, 98);
             this.gbParameter.TabIndex = 2;
             this.gbParameter.TabStop = false;
             this.gbParameter.Text = "泵参数设置";
@@ -364,7 +375,7 @@
             this.skinLabel7.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel7.BorderColor = System.Drawing.Color.White;
             this.skinLabel7.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel7.Location = new System.Drawing.Point(586, 25);
+            this.skinLabel7.Location = new System.Drawing.Point(782, 44);
             this.skinLabel7.Name = "skinLabel7";
             this.skinLabel7.Size = new System.Drawing.Size(65, 20);
             this.skinLabel7.TabIndex = 0;
@@ -377,7 +388,7 @@
             this.skinLabel8.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel8.BorderColor = System.Drawing.Color.White;
             this.skinLabel8.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel8.Location = new System.Drawing.Point(90, 26);
+            this.skinLabel8.Location = new System.Drawing.Point(120, 45);
             this.skinLabel8.Name = "skinLabel8";
             this.skinLabel8.Size = new System.Drawing.Size(65, 20);
             this.skinLabel8.TabIndex = 0;
@@ -393,28 +404,30 @@
             this.tbToolingNo.IsPasswordChat = '\0';
             this.tbToolingNo.IsSystemPasswordChar = false;
             this.tbToolingNo.Lines = new string[0];
-            this.tbToolingNo.Location = new System.Drawing.Point(654, 22);
+            this.tbToolingNo.Location = new System.Drawing.Point(872, 38);
             this.tbToolingNo.Margin = new System.Windows.Forms.Padding(0);
             this.tbToolingNo.MaxLength = 32767;
-            this.tbToolingNo.MinimumSize = new System.Drawing.Size(28, 28);
+            this.tbToolingNo.MinimumSize = new System.Drawing.Size(38, 49);
             this.tbToolingNo.MouseBack = null;
             this.tbToolingNo.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.tbToolingNo.Multiline = false;
+            this.tbToolingNo.Multiline = true;
             this.tbToolingNo.Name = "tbToolingNo";
             this.tbToolingNo.NormlBack = null;
-            this.tbToolingNo.Padding = new System.Windows.Forms.Padding(5);
+            this.tbToolingNo.Padding = new System.Windows.Forms.Padding(7, 9, 7, 9);
             this.tbToolingNo.ReadOnly = false;
             this.tbToolingNo.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.tbToolingNo.Size = new System.Drawing.Size(206, 28);
+            this.tbToolingNo.Size = new System.Drawing.Size(274, 49);
             // 
             // 
             // 
             this.tbToolingNo.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbToolingNo.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbToolingNo.SkinTxt.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
-            this.tbToolingNo.SkinTxt.Location = new System.Drawing.Point(5, 5);
+            this.tbToolingNo.SkinTxt.Location = new System.Drawing.Point(7, 9);
+            this.tbToolingNo.SkinTxt.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.tbToolingNo.SkinTxt.Multiline = true;
             this.tbToolingNo.SkinTxt.Name = "BaseText";
-            this.tbToolingNo.SkinTxt.Size = new System.Drawing.Size(196, 16);
+            this.tbToolingNo.SkinTxt.Size = new System.Drawing.Size(262, 31);
             this.tbToolingNo.SkinTxt.TabIndex = 0;
             this.tbToolingNo.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.tbToolingNo.SkinTxt.WaterText = "";
@@ -434,28 +447,30 @@
             this.tbPumpNo.IsPasswordChat = '\0';
             this.tbPumpNo.IsSystemPasswordChar = false;
             this.tbPumpNo.Lines = new string[0];
-            this.tbPumpNo.Location = new System.Drawing.Point(362, 21);
+            this.tbPumpNo.Location = new System.Drawing.Point(482, 37);
             this.tbPumpNo.Margin = new System.Windows.Forms.Padding(0);
             this.tbPumpNo.MaxLength = 32767;
-            this.tbPumpNo.MinimumSize = new System.Drawing.Size(28, 28);
+            this.tbPumpNo.MinimumSize = new System.Drawing.Size(38, 49);
             this.tbPumpNo.MouseBack = null;
             this.tbPumpNo.MouseState = CCWin.SkinClass.ControlState.Normal;
-            this.tbPumpNo.Multiline = false;
+            this.tbPumpNo.Multiline = true;
             this.tbPumpNo.Name = "tbPumpNo";
             this.tbPumpNo.NormlBack = null;
-            this.tbPumpNo.Padding = new System.Windows.Forms.Padding(5);
+            this.tbPumpNo.Padding = new System.Windows.Forms.Padding(7, 9, 7, 9);
             this.tbPumpNo.ReadOnly = false;
             this.tbPumpNo.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.tbPumpNo.Size = new System.Drawing.Size(207, 28);
+            this.tbPumpNo.Size = new System.Drawing.Size(275, 49);
             // 
             // 
             // 
             this.tbPumpNo.SkinTxt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbPumpNo.SkinTxt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPumpNo.SkinTxt.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
-            this.tbPumpNo.SkinTxt.Location = new System.Drawing.Point(5, 5);
+            this.tbPumpNo.SkinTxt.Font = new System.Drawing.Font("Noto Sans CJK SC Regular", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tbPumpNo.SkinTxt.Location = new System.Drawing.Point(7, 9);
+            this.tbPumpNo.SkinTxt.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.tbPumpNo.SkinTxt.Multiline = true;
             this.tbPumpNo.SkinTxt.Name = "BaseText";
-            this.tbPumpNo.SkinTxt.Size = new System.Drawing.Size(197, 16);
+            this.tbPumpNo.SkinTxt.Size = new System.Drawing.Size(262, 30);
             this.tbPumpNo.SkinTxt.TabIndex = 0;
             this.tbPumpNo.SkinTxt.WaterColor = System.Drawing.Color.FromArgb(((int)(((byte)(127)))), ((int)(((byte)(127)))), ((int)(((byte)(127)))));
             this.tbPumpNo.SkinTxt.WaterText = "";
@@ -503,8 +518,9 @@
             this.操作ToolStripMenuItem});
             this.skinMenuStrip1.Location = new System.Drawing.Point(4, 28);
             this.skinMenuStrip1.Name = "skinMenuStrip1";
+            this.skinMenuStrip1.Padding = new System.Windows.Forms.Padding(8, 3, 0, 3);
             this.skinMenuStrip1.RadiusStyle = CCWin.SkinClass.RoundStyle.All;
-            this.skinMenuStrip1.Size = new System.Drawing.Size(969, 28);
+            this.skinMenuStrip1.Size = new System.Drawing.Size(1295, 30);
             this.skinMenuStrip1.SkinAllColor = true;
             this.skinMenuStrip1.TabIndex = 3;
             this.skinMenuStrip1.Text = "skinMenuStrip1";
@@ -564,11 +580,13 @@
             this.gbChannel2.Enabled = false;
             this.gbChannel2.Font = new System.Drawing.Font("Microsoft YaHei", 14F);
             this.gbChannel2.ForeColor = System.Drawing.Color.Black;
-            this.gbChannel2.Location = new System.Drawing.Point(493, 120);
+            this.gbChannel2.Location = new System.Drawing.Point(657, 210);
+            this.gbChannel2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.gbChannel2.Name = "gbChannel2";
+            this.gbChannel2.Padding = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.gbChannel2.RectBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(208)))), ((int)(((byte)(255)))));
             this.gbChannel2.RoundStyle = CCWin.SkinClass.RoundStyle.All;
-            this.gbChannel2.Size = new System.Drawing.Size(480, 506);
+            this.gbChannel2.Size = new System.Drawing.Size(640, 885);
             this.gbChannel2.TabIndex = 2;
             this.gbChannel2.TabStop = false;
             this.gbChannel2.Text = "2道泵";
@@ -581,9 +599,10 @@
             this.cbPumpPort2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbPumpPort2.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
             this.cbPumpPort2.FormattingEnabled = true;
-            this.cbPumpPort2.Location = new System.Drawing.Point(204, 31);
+            this.cbPumpPort2.Location = new System.Drawing.Point(272, 54);
+            this.cbPumpPort2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cbPumpPort2.Name = "cbPumpPort2";
-            this.cbPumpPort2.Size = new System.Drawing.Size(80, 26);
+            this.cbPumpPort2.Size = new System.Drawing.Size(106, 26);
             this.cbPumpPort2.TabIndex = 1;
             this.cbPumpPort2.WaterText = "";
             this.cbPumpPort2.SelectedIndexChanged += new System.EventHandler(this.cbPumpPort2_SelectedIndexChanged);
@@ -591,9 +610,10 @@
             // tbRateChannel2
             // 
             this.tbRateChannel2.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.tbRateChannel2.Location = new System.Drawing.Point(338, 30);
+            this.tbRateChannel2.Location = new System.Drawing.Point(450, 52);
+            this.tbRateChannel2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.tbRateChannel2.Name = "tbRateChannel2";
-            this.tbRateChannel2.Size = new System.Drawing.Size(80, 25);
+            this.tbRateChannel2.Size = new System.Drawing.Size(106, 25);
             this.tbRateChannel2.TabIndex = 4;
             this.tbRateChannel2.Text = "50";
             this.tbRateChannel2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnRateKeyPress);
@@ -604,11 +624,12 @@
             this.btnStopPumpChannel2.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.btnStopPumpChannel2.DownBack = null;
             this.btnStopPumpChannel2.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.btnStopPumpChannel2.Location = new System.Drawing.Point(420, 68);
+            this.btnStopPumpChannel2.Location = new System.Drawing.Point(560, 119);
+            this.btnStopPumpChannel2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnStopPumpChannel2.MouseBack = null;
             this.btnStopPumpChannel2.Name = "btnStopPumpChannel2";
             this.btnStopPumpChannel2.NormlBack = null;
-            this.btnStopPumpChannel2.Size = new System.Drawing.Size(50, 26);
+            this.btnStopPumpChannel2.Size = new System.Drawing.Size(66, 45);
             this.btnStopPumpChannel2.TabIndex = 5;
             this.btnStopPumpChannel2.Text = "停止";
             this.btnStopPumpChannel2.UseVisualStyleBackColor = false;
@@ -619,9 +640,10 @@
             this.WavelinePanel2.BackColor = System.Drawing.Color.White;
             this.WavelinePanel2.Font = new System.Drawing.Font("Microsoft YaHei", 9F);
             this.WavelinePanel2.ForeColor = System.Drawing.Color.Black;
-            this.WavelinePanel2.Location = new System.Drawing.Point(3, 99);
+            this.WavelinePanel2.Location = new System.Drawing.Point(3, 173);
+            this.WavelinePanel2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.WavelinePanel2.Name = "WavelinePanel2";
-            this.WavelinePanel2.Size = new System.Drawing.Size(475, 406);
+            this.WavelinePanel2.Size = new System.Drawing.Size(633, 710);
             this.WavelinePanel2.TabIndex = 4;
             this.WavelinePanel2.Paint += new System.Windows.Forms.PaintEventHandler(this.WavelinePanel2_Paint);
             // 
@@ -631,11 +653,12 @@
             this.btnStartPumpChannel2.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.btnStartPumpChannel2.DownBack = null;
             this.btnStartPumpChannel2.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.btnStartPumpChannel2.Location = new System.Drawing.Point(362, 68);
+            this.btnStartPumpChannel2.Location = new System.Drawing.Point(482, 119);
+            this.btnStartPumpChannel2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.btnStartPumpChannel2.MouseBack = null;
             this.btnStartPumpChannel2.Name = "btnStartPumpChannel2";
             this.btnStartPumpChannel2.NormlBack = null;
-            this.btnStartPumpChannel2.Size = new System.Drawing.Size(50, 26);
+            this.btnStartPumpChannel2.Size = new System.Drawing.Size(66, 45);
             this.btnStartPumpChannel2.TabIndex = 4;
             this.btnStartPumpChannel2.Text = "开始";
             this.btnStartPumpChannel2.UseVisualStyleBackColor = false;
@@ -646,9 +669,10 @@
             this.cbToolingPort2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.cbToolingPort2.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
             this.cbToolingPort2.FormattingEnabled = true;
-            this.cbToolingPort2.Location = new System.Drawing.Point(74, 31);
+            this.cbToolingPort2.Location = new System.Drawing.Point(98, 54);
+            this.cbToolingPort2.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.cbToolingPort2.Name = "cbToolingPort2";
-            this.cbToolingPort2.Size = new System.Drawing.Size(80, 26);
+            this.cbToolingPort2.Size = new System.Drawing.Size(106, 26);
             this.cbToolingPort2.TabIndex = 1;
             this.cbToolingPort2.WaterText = "";
             this.cbToolingPort2.SelectedIndexChanged += new System.EventHandler(this.cbToolingPort2_SelectedIndexChanged);
@@ -660,7 +684,7 @@
             this.lbPChannel2.BackColor = System.Drawing.Color.Transparent;
             this.lbPChannel2.BorderColor = System.Drawing.Color.White;
             this.lbPChannel2.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.lbPChannel2.Location = new System.Drawing.Point(227, 70);
+            this.lbPChannel2.Location = new System.Drawing.Point(303, 122);
             this.lbPChannel2.Name = "lbPChannel2";
             this.lbPChannel2.Size = new System.Drawing.Size(39, 20);
             this.lbPChannel2.TabIndex = 0;
@@ -673,7 +697,7 @@
             this.skinLabel4.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel4.BorderColor = System.Drawing.Color.White;
             this.skinLabel4.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel4.Location = new System.Drawing.Point(167, 70);
+            this.skinLabel4.Location = new System.Drawing.Point(223, 122);
             this.skinLabel4.Name = "skinLabel4";
             this.skinLabel4.Size = new System.Drawing.Size(60, 20);
             this.skinLabel4.TabIndex = 0;
@@ -686,7 +710,7 @@
             this.lbWeightChannel2.BackColor = System.Drawing.Color.Transparent;
             this.lbWeightChannel2.BorderColor = System.Drawing.Color.White;
             this.lbWeightChannel2.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.lbWeightChannel2.Location = new System.Drawing.Point(72, 69);
+            this.lbWeightChannel2.Location = new System.Drawing.Point(96, 121);
             this.lbWeightChannel2.Name = "lbWeightChannel2";
             this.lbWeightChannel2.Size = new System.Drawing.Size(39, 20);
             this.lbWeightChannel2.TabIndex = 0;
@@ -699,7 +723,7 @@
             this.skinLabel6.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel6.BorderColor = System.Drawing.Color.White;
             this.skinLabel6.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel6.Location = new System.Drawing.Point(10, 69);
+            this.skinLabel6.Location = new System.Drawing.Point(14, 121);
             this.skinLabel6.Name = "skinLabel6";
             this.skinLabel6.Size = new System.Drawing.Size(65, 20);
             this.skinLabel6.TabIndex = 0;
@@ -712,7 +736,7 @@
             this.skinLabel11.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel11.BorderColor = System.Drawing.Color.White;
             this.skinLabel11.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel11.Location = new System.Drawing.Point(288, 32);
+            this.skinLabel11.Location = new System.Drawing.Point(384, 56);
             this.skinLabel11.Name = "skinLabel11";
             this.skinLabel11.Size = new System.Drawing.Size(45, 20);
             this.skinLabel11.TabIndex = 0;
@@ -725,7 +749,7 @@
             this.skinLabel12.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel12.BorderColor = System.Drawing.Color.White;
             this.skinLabel12.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel12.Location = new System.Drawing.Point(132, 69);
+            this.skinLabel12.Location = new System.Drawing.Point(176, 121);
             this.skinLabel12.Name = "skinLabel12";
             this.skinLabel12.Size = new System.Drawing.Size(26, 20);
             this.skinLabel12.TabIndex = 0;
@@ -738,7 +762,7 @@
             this.skinLabel15.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel15.BorderColor = System.Drawing.Color.White;
             this.skinLabel15.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel15.Location = new System.Drawing.Point(156, 34);
+            this.skinLabel15.Location = new System.Drawing.Point(208, 59);
             this.skinLabel15.Name = "skinLabel15";
             this.skinLabel15.Size = new System.Drawing.Size(51, 20);
             this.skinLabel15.TabIndex = 0;
@@ -751,7 +775,7 @@
             this.skinLabel16.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel16.BorderColor = System.Drawing.Color.White;
             this.skinLabel16.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel16.Location = new System.Drawing.Point(416, 32);
+            this.skinLabel16.Location = new System.Drawing.Point(554, 56);
             this.skinLabel16.Name = "skinLabel16";
             this.skinLabel16.Size = new System.Drawing.Size(44, 20);
             this.skinLabel16.TabIndex = 0;
@@ -764,7 +788,7 @@
             this.skinLabel17.BackColor = System.Drawing.Color.Transparent;
             this.skinLabel17.BorderColor = System.Drawing.Color.White;
             this.skinLabel17.Font = new System.Drawing.Font("Microsoft YaHei", 10F);
-            this.skinLabel17.Location = new System.Drawing.Point(9, 34);
+            this.skinLabel17.Location = new System.Drawing.Point(11, 59);
             this.skinLabel17.Name = "skinLabel17";
             this.skinLabel17.Size = new System.Drawing.Size(65, 20);
             this.skinLabel17.TabIndex = 0;
@@ -772,18 +796,21 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(208)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(977, 633);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1303, 1039);
             this.Controls.Add(this.gbChannel2);
             this.Controls.Add(this.skinGroupBox1);
             this.Controls.Add(this.gbParameter);
             this.Controls.Add(this.skinMenuStrip1);
+            this.Font = new System.Drawing.Font("Noto Sans CJK SC Regular", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.skinMenuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.MaximizeBox = false;
             this.Name = "MainForm";
-            this.Text = "压力调试";
+            this.Text = "压力测试1.0";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.skinGroupBox1.ResumeLayout(false);
             this.skinGroupBox1.PerformLayout();
