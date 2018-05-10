@@ -282,7 +282,6 @@ namespace PTool
             SaveLastToolingNo();
             this.Close();
         }
-
     }
 
     public class SampleData

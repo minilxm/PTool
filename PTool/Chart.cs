@@ -1318,7 +1318,7 @@ namespace PTool
         }
 
         /// <summary>
-        /// 计算得出的数据是否合法
+        /// 计算得出的数据是否合法，此函数弃用
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns></returns>
